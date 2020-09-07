@@ -4,20 +4,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Vmware密钥问题 | Molu</title>
+  <title>mount磁盘挂载 | Molu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="​        之前重装了一下系统，但是装vmware的时候出现问题，第一次装的workstation player因此卸载重装了一下，后来就卡在了网络组件上，最难受的是这个组件还杀不掉，就一直卡在进程里面，但也安装不上。 ​        最好的解决方式就是等到桌面上面出现了vmwareworkstation的图标之后（其实这个时候VMware大部分都安装好了，网卡是最后装的，之后就是注册表什">
+  <meta name="description" content="​        CentOS7挂载磁盘mount -t type device directory 其中type表示要挂载的装置中文件系统的格式： vfat ：Windows中长文件系统 ntfs ：WindowsNT、Windows7中广泛使用的高级文件系统 iso9660 ：标准cdrom文件系统 一般U盘的文件格式为：vfat 默认光盘设备在&#x2F;dev&#x2F;cdrom下，要挂载到的点，可以随便新">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Vmware密钥问题">
+<meta property="og:title" content="mount磁盘挂载">
 <meta property="og:url" content="http://example.com/2019/12/07/mount%E7%A3%81%E7%9B%98%E6%8C%82%E8%BD%BD/index.html">
 <meta property="og:site_name" content="Molu">
-<meta property="og:description" content="​        之前重装了一下系统，但是装vmware的时候出现问题，第一次装的workstation player因此卸载重装了一下，后来就卡在了网络组件上，最难受的是这个组件还杀不掉，就一直卡在进程里面，但也安装不上。 ​        最好的解决方式就是等到桌面上面出现了vmwareworkstation的图标之后（其实这个时候VMware大部分都安装好了，网卡是最后装的，之后就是注册表什">
+<meta property="og:description" content="​        CentOS7挂载磁盘mount -t type device directory 其中type表示要挂载的装置中文件系统的格式： vfat ：Windows中长文件系统 ntfs ：WindowsNT、Windows7中广泛使用的高级文件系统 iso9660 ：标准cdrom文件系统 一般U盘的文件格式为：vfat 默认光盘设备在&#x2F;dev&#x2F;cdrom下，要挂载到的点，可以随便新">
 <meta property="og:locale">
+<meta property="og:image" content="https://pic.downk.cc/item/5e4a5b4b48b86553ee14faa7.jpg">
+<meta property="og:image" content="https://pic.downk.cc/item/5e4a5bf948b86553ee151d6a.jpg">
+<meta property="og:image" content="https://pic.downk.cc/item/5e4a5e8048b86553ee15941a.jpg">
+<meta property="og:image" content="https://pic.downk.cc/item/5e4a5ebf48b86553ee159f97.jpg">
 <meta property="article:published_time" content="2019-12-07T02:26:31.000Z">
-<meta property="article:modified_time" content="2020-09-07T02:34:07.296Z">
+<meta property="article:modified_time" content="2020-09-07T02:35:54.718Z">
 <meta property="article:author" content="Rick Smith">
 <meta property="article:tag" content="运维日常">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://pic.downk.cc/item/5e4a5b4b48b86553ee14faa7.jpg">
   
   
     <link rel="icon" href="/favicon.png">
@@ -79,7 +84,7 @@
 
   <header class="article-header">
     <h1 class="article-title" itemprop="name">
-      Vmware密钥问题
+      mount磁盘挂载
     </h1>
     <div class="article-meta">
       Posted on 
@@ -90,12 +95,51 @@
   </header>
 
   <div class="article-entry" itemprop="articleBody">
-    <p>​        之前重装了一下系统，但是装vmware的时候出现问题，第一次装的workstation player因此卸载重装了一下，后来就卡在了网络组件上，最难受的是这个组件还杀不掉，就一直卡在进程里面，但也安装不上。</p>
-<p>​        最好的解决方式就是等到桌面上面出现了vmwareworkstation的图标之后（其实这个时候VMware大部分都安装好了，网卡是最后装的，之后就是注册表什么的）直接重启，重启之后进卸载程序</p>
-<p>由于Vmware的密钥认证文件和本身启动文件不是一个文件，因此只能进入</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">VMware\VMware Workstation\x64</span><br></pre></td></tr></table></figure>
-<p>这个位置打开vmware-vmx文件进行安装，注意是管理员权限安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\&gt;cd Program Files (x86)\VMware\VMware Workstation\x64</span><br><span class="line"></span><br><span class="line">C:\Program Files (x86)\VMware\VMware Workstation\x64&gt;vmware-vmx.exe --new-sn AZ312-2FE41-M81LP-R6WEZ-NA2Z4</span><br></pre></td></tr></table></figure>
+    <p>​       </p>
+<h3 id="CentOS7挂载磁盘"><a href="#CentOS7挂载磁盘" class="headerlink" title="CentOS7挂载磁盘"></a>CentOS7挂载磁盘</h3><pre><code>mount -t type device directory</code></pre>
+<p>其中type表示要挂载的装置中文件系统的格式：</p>
+<p>vfat ：Windows中长文件系统</p>
+<p>ntfs ：WindowsNT、Windows7中广泛使用的高级文件系统</p>
+<p>iso9660 ：标准cdrom文件系统</p>
+<p>一般U盘的文件格式为：vfat</p>
+<p>默认光盘设备在/dev/cdrom下，要挂载到的点，可以随便新建一个文件夹，那么基本命令如下：</p>
+<p>在/root目录下新建一个文件夹cdrom</p>
+<pre><code>mkdir cdrom</code></pre>
+<p>-o表示给文件系统添加特定的选项：</p>
+<p>ro：以只读形式挂载</p>
+<p>rw：以读写形式挂载</p>
+<p>user：允许普通用户挂载文件系统</p>
+<p>check=none ：挂载文件系统时不进行完整性检验</p>
+<p>loop：挂载一个文件</p>
+<p>那么这样我们就将光盘挂载到了/root/cdrom下，下载就可以在文件夹下看到其中的文件：</p>
+<p><img src="https://pic.downk.cc/item/5e4a5b4b48b86553ee14faa7.jpg"><br><img src="https://pic.downk.cc/item/5e4a5bf948b86553ee151d6a.jpg"><br>使用完成后，需要用umount命令进行卸载</p>
+<pre><code>umount [directory|device]</code></pre>
+<p>umount允许通过设备文件或者挂载点来指定要卸载的设备。<br><img src="https://pic.downk.cc/item/5e4a5e8048b86553ee15941a.jpg"></p>
+<h3 id="umount使用时显示磁盘正忙"><a href="#umount使用时显示磁盘正忙" class="headerlink" title="umount使用时显示磁盘正忙"></a>umount使用时显示磁盘正忙</h3><p><img src="https://pic.downk.cc/item/5e4a5ebf48b86553ee159f97.jpg"></p>
+<h4 id="一、首先看自己是不是处在需要卸载的挂载目录下（就像标题里面的一样）"><a href="#一、首先看自己是不是处在需要卸载的挂载目录下（就像标题里面的一样）" class="headerlink" title="一、首先看自己是不是处在需要卸载的挂载目录下（就像标题里面的一样）"></a>一、首先看自己是不是处在需要卸载的挂载目录下（就像标题里面的一样）</h4><p>这时候只需要离开这个目录就可以解决问题。</p>
+<h3 id="二、第二种情况是没有在挂载目录，但是umount时，始终无法umonut，可以通过fuser查看设备被哪个进程占用，之后杀死进程，就可以顺利umount了。"><a href="#二、第二种情况是没有在挂载目录，但是umount时，始终无法umonut，可以通过fuser查看设备被哪个进程占用，之后杀死进程，就可以顺利umount了。" class="headerlink" title="二、第二种情况是没有在挂载目录，但是umount时，始终无法umonut，可以通过fuser查看设备被哪个进程占用，之后杀死进程，就可以顺利umount了。"></a>二、第二种情况是没有在挂载目录，但是umount时，始终无法umonut，可以通过fuser查看设备被哪个进程占用，之后杀死进程，就可以顺利umount了。</h3><p>1、查看umount后提示信息</p>
+<pre><code># umount /var/lib/ceph/osd/ceph-1
+umount: /var/lib/ceph/osd/ceph-1：目标忙。
+    (有些情况下通过 lsof(8) 或 fuser(1) 可以
+     找到有关使用该设备的进程的有用信息)</code></pre>
+<p>2、yum 安装 fuser</p>
+<pre><code># yum install -y psmisc</code></pre>
+<p>1<br>3、查看挂载进程号</p>
+<pre><code># fuser -mv  /var/lib/ceph/osd/ceph-1
+                 用户     进程号 权限   命令
+/var/lib/ceph/osd/ceph-1:
+                 root     kernel mount /var/lib/ceph/osd/ceph-1
+                 ceph       5979 F.... ceph-osd</code></pre>
+<p>4、杀掉进程</p>
+<pre><code># kill -9 5979
+# fuser -mv  /var/lib/ceph/osd/ceph-1
+                 用户     进程号 权限   命令
+/var/lib/ceph/osd/ceph-1:
+                 root     kernel mount /var/lib/ceph/osd/ceph-1</code></pre>
+<p>5、umount取消挂载</p>
+<pre><code># umount /var/lib/ceph/osd/ceph-1</code></pre>
+<p>转载：<a target="_blank" rel="noopener" href="https://blog.csdn.net/li1615882553/article/details/83828900">https://blog.csdn.net/li1615882553/article/details/83828900</a></p>
+
   </div>
   
   <div class="article-tags">
