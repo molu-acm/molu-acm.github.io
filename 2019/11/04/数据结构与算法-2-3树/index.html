@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>数据结构与算法--2-3树 | Molu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1 前言  前面讲到了二叉搜索树(BST)和二叉平衡树(AVL)，二叉搜索树在最好的情况下搜索的时间复杂度为O(logn)，但如果插入节点时，插入元素序列本身就是有序的，那么BST树就退化成一个线性表了，搜索的时间复杂度为O(n)。  如果想要减少比较次数，就需要降低树的高度。在插入和删除节点时，要保证插入节点后不能使叶子节点之间的深度之差大于1，这样就能保证整棵树的深度最小，这就是AVL树解决B">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法--2-3树">
+<meta property="og:url" content="http://example.com/2019/11/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-2-3%E6%A0%91/index.html">
+<meta property="og:site_name" content="Molu">
+<meta property="og:description" content="1 前言  前面讲到了二叉搜索树(BST)和二叉平衡树(AVL)，二叉搜索树在最好的情况下搜索的时间复杂度为O(logn)，但如果插入节点时，插入元素序列本身就是有序的，那么BST树就退化成一个线性表了，搜索的时间复杂度为O(n)。  如果想要减少比较次数，就需要降低树的高度。在插入和删除节点时，要保证插入节点后不能使叶子节点之间的深度之差大于1，这样就能保证整棵树的深度最小，这就是AVL树解决B">
+<meta property="og:locale">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/a35c4aed00843dbb6aef8157483b7a9e.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/6916e37e045c6e88efb5c8611f4f20c1.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/f65b244cd8bdc1b3b6052e396eaf33ab.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/ccff8feed38e2fd2db5e51918f26c9d3.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/bd768163785f4e33e5f3316d5f1cc3e8.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/0cff6f74481303fd442d5283791f6c59.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/07b6d2800371d6bdafa21bdd9fbc3a5a.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/46fa0c9c05446a180e1958f3111b577f.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/79b4a6a6eca96acafffc5c2b442c052d.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/fc4c8bd91d7e386238e6047b941ad429.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/235f51e0c838c7099db14d254a900444.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/285db0d032c3aae2c0e205fc017e75ec.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/4454c2d88df1f441e6ead6a550407fcd.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/6aea6353a9c8e042c9f3fdf28c3cf2c6.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/9eed47e91cdd721035760525f230f12c.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/caa28467e8dcb3bf694a322263512500.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/aaea050b8cd1be3572097b35a04e8926.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/fd41e34febe4651d4f9ca5d53c1325dc.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/ba52aba6e18ae595ee9aa499523f9d4d.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/669908519dceaa20120985b6bfc5b0cf.png">
+<meta property="article:published_time" content="2019-11-04T10:24:40.000Z">
+<meta property="article:modified_time" content="2019-11-04T10:27:06.000Z">
+<meta property="article:author" content="Rick Smith">
+<meta property="article:tag" content="数论和图论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.xiaozhuanlan.com/photo/2019/a35c4aed00843dbb6aef8157483b7a9e.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+	<!-- If needed, replace your own web font service -->
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,700|Inconsolata|Oswald" rel="stylesheet" />
+
+  
+   
+  
+<link rel="stylesheet" href="/icomoon/style.css">
+
+  
+<link rel="stylesheet" href="/style.css">
+
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div class="site-wrapper is_post_page">
+    <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+<script>document.getElementById("loading-bar").style.width="20%";</script>
+
+
+<header id="header" class="site-header clearfix">
+
+  <a class="logo square clearfix" href="/">
+    <!-- 
+      Replace with your own size name, for example:
+      <span class="b">A</span>
+      <span class="w">B</span>
+      <span class="b">C</span>
+     -->
+     <span class="b">M</span>
+     <span class="b">O</span>
+     <span class="b">L</span>
+     <span class="w">U</span>
+     <span class="w">-</span>
+     <span class="b">Q</span>
+     <span class="b">w</span>
+     <span class="b">Q</span>
+  </a>
+  <a class="me square site-nav-switch clearfix">
+    <span class="b">
+    	<span class="icon icon-menu"></span>
+    </span>
+  </a>
+
+</header>
+
+    <script>document.getElementById("loading-bar").style.width="40%";</script>
+    <main id="main" class="clearfix">
+      <article id="post-数据结构与算法-2-3树"
+  class="article white-box article-type-post"
+  itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    <h1 class="article-title" itemprop="name">
+      数据结构与算法--2-3树
+    </h1>
+    <div class="article-meta">
+      Posted on 
+      <time class="article-time" datetime="2019-11-04T10:24:40.000Z" itemprop="datePublished">
+        Nov 4, 2019
+      </time>
+    </div>
+  </header>
+
+  <div class="article-entry" itemprop="articleBody">
+    <h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>  前面讲到了二叉搜索树(BST)和二叉平衡树(AVL)，二叉搜索树在最好的情况下搜索的时间复杂度为O(logn)，但如果插入节点时，插入元素序列本身就是有序的，那么BST树就退化成一个线性表了，搜索的时间复杂度为O(n)。<br>  如果想要减少比较次数，就需要降低树的高度。在插入和删除节点时，要保证插入节点后不能使叶子节点之间的深度之差大于1，这样就能保证整棵树的深度最小，这就是AVL树解决BST搜索性能降低的策略。但由于每次插入或删除节点后，都可能会破坏AVL的平衡，而要动态保证AVL的平衡需要很多操作，这些操作会影响整个数据结构的性能，除非是在树的结构变化特别少的情形下，否则AVL树平衡带来的搜索性能提升有可能还不足为了平衡树所带来的性能损耗。<br>  因此，引入了2-3树来提升效率。2-3树本质也是一种平衡搜索树，但2-3树已经不是一棵二叉树了，因为2-3树允许存在3这种节点，3-节点中可以存放两个元素，并且可以有三个子节点。</p>
+<h1 id="2-2-3树定义"><a href="#2-2-3树定义" class="headerlink" title="2 2-3树定义"></a>2 2-3树定义</h1><p><strong>2-3树的定义</strong></p>
+<blockquote>
+<p>（1）2-3树要么为空要么具有以下性质：<br>（2）对于2-节点，和普通的BST节点一样，有一个数据域和两个子节点指针，两个子节点要么为空，要么也是一个2-3树，当前节点的数据的值要大于左子树中所有节点的数据，要小于右子树中所有节点的数据。<br>（3）对于3-节点，有两个数据域a和b和和三个子节点指针，左子树中所有的节点数据要小于a，中子树中所有节点数据要大于a而小于b，右子树中所有节点数据要大于b。</p>
+</blockquote>
+<p>例如：图2.1所示的树为一棵2-3树，树中共有5个2-节点和3个3-节点。<br><img src="https://images.xiaozhuanlan.com/photo/2019/a35c4aed00843dbb6aef8157483b7a9e.png" alt="图2.1"></p>
+<p>图2.1</p>
+<h1 id="3-2-3树性质"><a href="#3-2-3树性质" class="headerlink" title="3 2-3树性质"></a>3 2-3树性质</h1><p><strong>性质：</strong></p>
+<blockquote>
+<p>（1）对于每一个结点有1或者2个关键码。<br>（2）当节点有1个关键码的时，节点有2个子树。<br>（3）当节点有2个关键码时，节点有3个子树。<br>（4）所有叶子点都在树的同一层。</p>
+</blockquote>
+<h1 id="4-2-3树查找"><a href="#4-2-3树查找" class="headerlink" title="4 2-3树查找"></a>4 2-3树查找</h1><p>2-3树的查找类似二叉搜索树的查找过程，根据键值的比较来决定查找的方向。</p>
+<p>例如：在图2.1所示的2-3树中查找键为H的节点：<br><img src="https://images.xiaozhuanlan.com/photo/2019/6916e37e045c6e88efb5c8611f4f20c1.png" alt="img"></p>
+<p>例如：在图2.1所示的2-3树中查找键为B的节点：<br><img src="https://images.xiaozhuanlan.com/photo/2019/f65b244cd8bdc1b3b6052e396eaf33ab.png" alt="img"></p>
+<h1 id="5-2-3树插入"><a href="#5-2-3树插入" class="headerlink" title="5 2-3树插入"></a>5 2-3树插入</h1><h2 id="5-1-插入"><a href="#5-1-插入" class="headerlink" title="5.1 插入"></a>5.1 插入</h2><p>  在树的插入之前需要对待插入的节点key进行一次查找操作，若树中已经有此节点则不予插入，若没有查找到此节点，则记录未命中查找结束时访问的最后一个节点。空树的插入最简单，直接创建一个2-节点即可，这里不予赘述。<br>  对于非空树插入主要分为以下4种情况：</p>
+<blockquote>
+<p>（1）向2-节点中插入新节点<br>（2）向一棵只含3-节点的树中插入新节点<br>（3）向一个父节点为2-节点的3-节点中插入新节点<br>（4）向一个父节点为3-节点的3-节点中插入新节点</p>
+</blockquote>
+<h2 id="5-2-向2-节点中插入新节点"><a href="#5-2-向2-节点中插入新节点" class="headerlink" title="5.2 向2-节点中插入新节点"></a>5.2 向2-节点中插入新节点</h2><p>  <strong>操作步骤：如果未命中查找结束于一个2-节点，直接将2-节点替换为一个3-节点，并将要插入的键保存在其中。</strong><br>  例如：在图2.1所示的2-3树中插入K。<br><strong>图解过程：</strong><br>  （1）插入数据K，需要在树中查找是否包含K值。查找过程按照类似二叉搜索树的查找方式进行。<br><img src="https://images.xiaozhuanlan.com/photo/2019/ccff8feed38e2fd2db5e51918f26c9d3.png" alt="img"><br>  （2）树中不包含数据K，查找失败，并记录查找结束位置为L节点，L节点为2-节点，直接插入数据K，并将2-节点变为3-节点，插入完成。<br><img src="https://images.xiaozhuanlan.com/photo/2019/bd768163785f4e33e5f3316d5f1cc3e8.png" alt="img"></p>
+<h2 id="5-3-向一棵只含3-节点的树中插入新节点"><a href="#5-3-向一棵只含3-节点的树中插入新节点" class="headerlink" title="5.3 向一棵只含3-节点的树中插入新节点"></a>5.3 向一棵只含3-节点的树中插入新节点</h2><p>  <strong>操作步骤：向一棵只含3-节点的树中插入新节点，先临时将新键存入唯一的3-节点中，使其成为一个4-节点，再将它转化为一颗由3个2-节点组成的2-3树，分解后树高会增加1。</strong><br>  例如：在3-节点中插入D。<br><strong>图解过程：</strong><br>  （1）图中的节点为3-节点，节点中包含A和F两个key，若要向节点中插入D，则需要创建临时4-节点，4-节点中包含A、D、F三个key。由于4-节点是不符合2-3树定义，因此需要执行节点分裂。<br><img src="https://images.xiaozhuanlan.com/photo/2019/0cff6f74481303fd442d5283791f6c59.png" alt="img"><br>  （2）选择中间值D为父节点，小于D的key值A作为D的左子树，F作为右子树，执行节点分裂。<br><img src="https://images.xiaozhuanlan.com/photo/2019/07b6d2800371d6bdafa21bdd9fbc3a5a.png" alt="img"></p>
+<h2 id="5-4-向一个父节点为2-节点的3-节点中插入新节点"><a href="#5-4-向一个父节点为2-节点的3-节点中插入新节点" class="headerlink" title="5.4 向一个父节点为2-节点的3-节点中插入新节点"></a>5.4 向一个父节点为2-节点的3-节点中插入新节点</h2><p>  <strong>操作步骤：先构造一个临时的4-节点并将其分解，分解时将中键移动到父节点中(中键移动后，其父节点中的位置由键的大小确定)</strong><br>  例如：在图2.1所示2-3树中插入Z。<br><strong>图解过程：</strong><br>  （1）执行数据Z的查找过程，并记录最终的查找结束位置。查找结束位置为键值S和X所在节点，此节点为3-节点。<br><img src="https://images.xiaozhuanlan.com/photo/2019/46fa0c9c05446a180e1958f3111b577f.png" alt="img"><br>  （2）键值S和X构成的节点为3-节点，插入Z后构造临时4-节点，然后选择X为中间值，执行节点分裂。<br><img src="https://images.xiaozhuanlan.com/photo/2019/79b4a6a6eca96acafffc5c2b442c052d.png" alt="img"></p>
+<h2 id="5-5-向一个父节点为3-节点的3-节点中插入新节点"><a href="#5-5-向一个父节点为3-节点的3-节点中插入新节点" class="headerlink" title="5.5 向一个父节点为3-节点的3-节点中插入新节点"></a>5.5 向一个父节点为3-节点的3-节点中插入新节点</h2><p>  <strong>操作步骤：插入节点后一直向上分解构造的临时4-节点并将中键移动到更高层双亲节点，直到遇到一个-2节点并将其替换为一个不需要继续分解的3-节点，或是到达树根(3-节点)。</strong><br>  例如：在图2.1所示的2-3树中插入D。<br><strong>图解过程：</strong><br>  （1）首先，查找D的位置，若查找成功不予插入，否则记录查找结束位置节点。查找结束位置为键A和C所在节点，此节点为3-节点。<br><img src="https://images.xiaozhuanlan.com/photo/2019/fc4c8bd91d7e386238e6047b941ad429.png" alt="img"><br>  （2）插入D后，构造临时4-节点，然后以C为中值，执行分裂，C变为父节点，A为左孩子，D为右孩子。并将C上移至父节点中。<br><img src="https://images.xiaozhuanlan.com/photo/2019/235f51e0c838c7099db14d254a900444.png" alt="img"><br>  （3）C上移至父节点，即为将C插入至父节点中。父节点插入插入之后由3-节点变为临时4-节点，需要执行分裂操作。<br><img src="https://images.xiaozhuanlan.com/photo/2019/285db0d032c3aae2c0e205fc017e75ec.png" alt="img"></p>
+<h2 id="5-6-分裂根节点"><a href="#5-6-分裂根节点" class="headerlink" title="5.6 分裂根节点"></a>5.6 分裂根节点</h2><p>  <strong>操作步骤：如果从插入节点到根节点的路径上全是3-节点（包含根节点在内），根节点将最终被替换为一个临时的4-节点，将临时的4-节点分解为3个2-节点，分解后树高会增加1。</strong></p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/4454c2d88df1f441e6ead6a550407fcd.png" alt="img"></p>
+<h1 id="6-2-3树删除"><a href="#6-2-3树删除" class="headerlink" title="6 2-3树删除"></a>6 2-3树删除</h1><p>  与插入数据一致，在删除数据之前，先要对2-3树进行一次命中的查找，查找成功才可以进行删除操作。<br>  删除节点大概分为3种情形：</p>
+<blockquote>
+<p>（1）删除非叶子节点。<br>（2）删除不为2-节点的叶子节点。<br>（3）删除为2-节点的叶子节点。</p>
+</blockquote>
+<h2 id="6-1-删除非叶子节点"><a href="#6-1-删除非叶子节点" class="headerlink" title="6.1 删除非叶子节点"></a>6.1 删除非叶子节点</h2><p>  <strong>操作步骤：使用中序遍历下的直接后继节点key来覆盖当前待删除节点key，再删除用来覆盖的后继节点key。</strong></p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/6aea6353a9c8e042c9f3fdf28c3cf2c6.png" alt="img"></p>
+<h2 id="6-2-删除不为2-节点的叶子节点"><a href="#6-2-删除不为2-节点的叶子节点" class="headerlink" title="6.2 删除不为2-节点的叶子节点"></a>6.2 删除不为2-节点的叶子节点</h2><p>  <strong>操作步骤：删除不为2-节点的叶子节点，直接删除节点即可。</strong></p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/9eed47e91cdd721035760525f230f12c.png" alt="img"></p>
+<h2 id="6-3-删除为2-节点的叶子节点"><a href="#6-3-删除为2-节点的叶子节点" class="headerlink" title="6.3 删除为2-节点的叶子节点"></a>6.3 删除为2-节点的叶子节点</h2><p>  删除为2-节点的叶子节点的步骤相对复杂，删除节点后需要做出相应判断，并根据判断结果调整树结构。主要分为四种情形：</p>
+<p><strong>（1） 删除节点为2-节点，父节点为2-节点，兄弟节点为3-节点</strong><br>  <strong>操作步骤：当前待删除节点的父节点是2-节点、兄弟节点是3-节点，将父节点移动到当前待删除节点位置，再将兄弟节点中最接近当前位置的key移动到父节点中。</strong></p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/caa28467e8dcb3bf694a322263512500.png" alt="img"></p>
+<p><strong>（2） 删除节点为2-节点，父节点为2-节点，兄弟节点为2-节点</strong><br>  <strong>操作步骤：当前待删除节点的父节点是2-节点、兄弟节点也是2-节点，先通过移动兄弟节点的中序遍历直接后驱到兄弟节点，以使兄弟节点变为3-节点；再进行6.3.1的操作。</strong></p>
+<p><strong>图解过程：</strong></p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/aaea050b8cd1be3572097b35a04e8926.png" alt="img"><br><img src="https://images.xiaozhuanlan.com/photo/2019/fd41e34febe4651d4f9ca5d53c1325dc.png" alt="img"></p>
+<p><strong>（3）删除节点为2-节点，父节点为3-节点</strong><br>  <strong>操作步骤：当前待删除节点的父节点是3-节点，拆分父节点使其成为2-节点，再将再将父节点中最接近的一个拆分key与中孩子合并，将合并后的节点作为当前节点。</strong></p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/ba52aba6e18ae595ee9aa499523f9d4d.png" alt="img"></p>
+<p><strong>（4） 2-3树为满二叉树，删除叶子节点</strong><br>  <strong>操作步骤：若2-3树是一颗满二叉树，将2-3树层树减少，并将当前删除节点的兄弟节点合并到父节点中，同时将父节点的所有兄弟节点合并到父节点的父节点中，如果生成了4-节点，再分解4-节点。</strong></p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/669908519dceaa20120985b6bfc5b0cf.png" alt="img"></p>
+<h1 id="7-结语"><a href="#7-结语" class="headerlink" title="7 结语"></a>7 结语</h1><p>  2-3树作为一种平衡查找树，查询效率比普通的二叉排序树要稳定许多。但是2-3树需要维护两种不同类型的结点，查找和插入操作的实现需要大量的代码，而且它们所产生的额外开销可能会使算法比标准的二叉查找树更慢。</p>
+
+  </div>
+  
+  <div class="article-tags">
+    
+      <a class="tag-none-link" href="/tags/%E6%95%B0%E8%AE%BA%E5%92%8C%E5%9B%BE%E8%AE%BA/" rel="tag">数论和图论</a>
+    
+  </div>
+
+  
+  <section id="comments" class="white-box">
+    
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    
+	</section>
+	
+
+</article>
+
+      <script>document.getElementById("loading-bar").style.width="60%";</script>
+    </main>
+    
+<footer id="footer" class="clearfix">
+	
+	<div class="search">
+	  <form name="searchform" id="searchform" class="u-search-form">
+	    <input type="text" id="searchinput" 
+				class="u-search-input st-default-search-input"
+				data-list-highlight="true" 
+				data-list-value-completion="true" 
+				placeholder="Looking for something?" />
+	    <button type="submit" id="u-search-btn-submit" class="u-search-btn-submit">
+	      <span class="icon icon-search"></span>
+	    </button>
+	  </form>
+	</div>
+	
+  <div>&copy; <a href="http://example.com">Molu</a> Theme by <a href="http://artifact.me/" target="_blank">Art Chen</a>.</div>
+  <div>Powered by <a target="_blank" href="https://hexo.io/" rel="external noopener">Hexo</a>.</div>
+</footer>
+
+
+    <script>document.getElementById("loading-bar").style.width="80%";</script>
+    <div class="overlay"></div>
+  </div>
+  <div class="site-sidebar">
+
+	
+	
+	<div class="sidebar-switch clearfix "
+		style="display: none">
+		<a class="dark-btn active" data-toggle="toc">
+	    <span class="icon icon-list"></span>
+	    <span class="text">Index</span>
+	  </a>
+	  <a class="dark-btn" data-toggle="bio">
+	    <span class="icon icon-person"></span>
+	    <span class="text">Bio</span>
+	  </a>
+	</div>
+
+	<div class="site-toc "
+		style="display: none">
+		
+	    <div class="no-index">No Index</div>
+	  
+  </div>
+  
+	<div class="site-bio show"
+		style="display: block">
+		
+	  <!-- About Me -->
+	  <div class="about-me clearfix">
+	    <div class="avatar">
+	      <img src="/img/avatar.png" />
+	    </div>
+	    <div class="info">
+	      <a class="name dark-btn" href="/about">
+	        Rick Smith
+	      </a>
+	    </div>
+	    <div class="info">
+	      <span class="item desc">
+	        
+	      </span>
+	    </div>
+	  </div>
+	
+	  <!-- Social Icons -->
+	  <div class="social clearfix">
+	    
+	      
+	        <a href="/atom.xml" class="feed"
+	          target="_blank" rel="external">
+	          <span class="icon icon-feed"></span>
+	        </a>
+	      
+	        <a href="https://github.com/artchen" class="github"
+	          target="_blank" rel="external">
+	          <span class="icon icon-github"></span>
+	        </a>
+	      
+	    
+	  </div>
+
+	</div>
+
+	<div class="shortcuts">
+		<a href="#header" class="top window-nav dark-btn" id="go-top">
+			<span class="icon icon-chevron-thin-up"></span>
+		</a>
+		<a class="close dark-btn" id="sidebar-close">
+			<span class="icon icon-close"></span>
+		</a>
+		<a href="#footer" class="top window-nav dark-btn" id="go-bottom">
+			<span class="icon icon-chevron-thin-down"></span>
+		</a>
+	</div>
+
+</div>
+
+  <!-- Universal Search -->
+
+<script type="text/javascript">
+  var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+  var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+  var ALGOLIA_API_KEY = "";
+  var ALGOLIA_APP_ID = "";
+  var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "google";
+  var universalSearchConfig = {};
+  if (SEARCH_SERVICE === 'google') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: GOOGLE_CUSTOM_SEARCH_API_KEY,
+      engineId: GOOGLE_CUSTOM_SEARCH_ENGINE_ID,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'algolia') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: ALGOLIA_API_KEY,
+      appId: ALGOLIA_APP_ID,
+      indexName: ALGOLIA_INDEX_NAME,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'azure') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      serviceName: AZURE_SERVICE_NAME,
+      indexName: AZURE_INDEX_NAME,
+      apiKey: AZURE_QUERY_KEY,
+      imagePath: "/img/"
+    };
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery.js"><\/script>')</script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/app.js"></script>
+
+
+<!-- Disqus -->
+
+
+<script type="text/javascript">
+  var disqus_shortname = 'molu';
+  
+  var disqus_url = 'http://example.com/2019/11/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-2-3%E6%A0%91/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<!-- Valine -->
+
+
+<!-- Swiftype -->
+<!-- Please replace with your own swiftype settings -->
+<!--
+<script type="text/javascript">
+  /* Swiftype */
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','FHMeAyBdVccJECstf-XJ','2.0.0');
+</script>
+-->
+
+  <script>document.getElementById("loading-bar").style.width="100%";</script>
+</body>
+</html>

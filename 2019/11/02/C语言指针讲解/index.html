@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>C语言指针讲解 | Molu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="转载自https:&#x2F;&#x2F;www.cnblogs.com&#x2F;tongye&#x2F;p&#x2F;9650573.html，侵删 一、什么是指针 　　C语言里，变量存放在内存中，而内存其实就是一组有序字节组成的数组，每个字节有唯一的内存地址。CPU 通过内存寻址对存储在内存中的某个指定数据对象的地址进行定位。这里，数据对象是指存储在内存中的一个指定数据类型的数值或字符串，它们都有一个自己的地址，而指针便是保存这个地址的变量">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言指针讲解">
+<meta property="og:url" content="http://example.com/2019/11/02/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E8%AE%B2%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Molu">
+<meta property="og:description" content="转载自https:&#x2F;&#x2F;www.cnblogs.com&#x2F;tongye&#x2F;p&#x2F;9650573.html，侵删 一、什么是指针 　　C语言里，变量存放在内存中，而内存其实就是一组有序字节组成的数组，每个字节有唯一的内存地址。CPU 通过内存寻址对存储在内存中的某个指定数据对象的地址进行定位。这里，数据对象是指存储在内存中的一个指定数据类型的数值或字符串，它们都有一个自己的地址，而指针便是保存这个地址的变量">
+<meta property="og:locale">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/H1fc1f0f41382411d953280ea9147b1620.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/Hbc4e0adf0ed64ffd9e2635f250554dbbi.png">
+<meta property="og:image" content="https://ae01.alicdn.com/kf/H05cf706cf47b47e889eb1b3aa1b39c765.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/765389/201809/765389-20180921154218407-1813012241.png">
+<meta property="og:image" content="https://img2018.cnblogs.com/blog/765389/201809/765389-20180918160417548-189120951.png">
+<meta property="article:published_time" content="2019-11-02T04:40:45.000Z">
+<meta property="article:modified_time" content="2019-11-02T05:29:40.000Z">
+<meta property="article:author" content="Rick Smith">
+<meta property="article:tag" content="入门讲解">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ae01.alicdn.com/kf/H1fc1f0f41382411d953280ea9147b1620.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+	<!-- If needed, replace your own web font service -->
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,700|Inconsolata|Oswald" rel="stylesheet" />
+
+  
+   
+  
+<link rel="stylesheet" href="/icomoon/style.css">
+
+  
+<link rel="stylesheet" href="/style.css">
+
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div class="site-wrapper is_post_page">
+    <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+<script>document.getElementById("loading-bar").style.width="20%";</script>
+
+
+<header id="header" class="site-header clearfix">
+
+  <a class="logo square clearfix" href="/">
+    <!-- 
+      Replace with your own size name, for example:
+      <span class="b">A</span>
+      <span class="w">B</span>
+      <span class="b">C</span>
+     -->
+     <span class="b">M</span>
+     <span class="b">O</span>
+     <span class="b">L</span>
+     <span class="w">U</span>
+     <span class="w">-</span>
+     <span class="b">Q</span>
+     <span class="b">w</span>
+     <span class="b">Q</span>
+  </a>
+  <a class="me square site-nav-switch clearfix">
+    <span class="b">
+    	<span class="icon icon-menu"></span>
+    </span>
+  </a>
+
+</header>
+
+    <script>document.getElementById("loading-bar").style.width="40%";</script>
+    <main id="main" class="clearfix">
+      <article id="post-C语言指针讲解"
+  class="article white-box article-type-post"
+  itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    <h1 class="article-title" itemprop="name">
+      C语言指针讲解
+    </h1>
+    <div class="article-meta">
+      Posted on 
+      <time class="article-time" datetime="2019-11-02T04:40:45.000Z" itemprop="datePublished">
+        Nov 2, 2019
+      </time>
+    </div>
+  </header>
+
+  <div class="article-entry" itemprop="articleBody">
+    <p>转载自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/tongye/p/9650573.html%EF%BC%8C%E4%BE%B5%E5%88%A0">https://www.cnblogs.com/tongye/p/9650573.html，侵删</a></p>
+<p><strong>一、什么是指针</strong></p>
+<p>　　C语言里，变量存放在内存中，而<strong>内存其实就是一组有序字节组成的数组</strong>，每个字节有唯一的内存地址。CPU 通过内存寻址对存储在内存中的某个指定数据对象的地址进行定位。这里，数据对象是指存储在内存中的一个指定数据类型的数值或字符串，它们都有一个自己的地址，而指针便是保存这个地址的变量。也就是说：<strong>指针是一种保存变量地址的变量</strong>。</p>
+<p>　　前面已经提到内存其实就是一组有序字节组成的数组，数组中，每个字节大大小固定，都是 8bit。对这些连续的字节从 0 开始进行编号，每个字节都有唯一的一个编号，这个编号就是内存地址。示意如下图：</p>
+<p><img src="https://ae01.alicdn.com/kf/H1fc1f0f41382411d953280ea9147b1620.png" alt="img"></p>
+<p>　　这是一个 4GB 的内存，可以存放 2^32 个字节的数据。左侧的连续的十六进制编号就是内存地址，每个内存地址对应一个字节的内存空间。而指针变量保存的就是这个编号，也即内存地址。</p>
+<p><strong>二、为什么要使用指针</strong></p>
+<p>　　在C语言中，指针的使用非常广泛，因为使用指针往往可以生成更高效、更紧凑的代码。总的来说，使用指针有如下好处：</p>
+<p>1）指针的使用使得不同区域的代码可以轻易的共享内存数据，这样可以使程序更为快速高效；</p>
+<p>2）C语言中一些复杂的数据结构往往需要使用指针来构建，如链表、二叉树等；</p>
+<p>3）C语言是传值调用，而有些操作传值调用是无法完成的，如通过被调函数修改调用函数的对象，但是这种操作可以由指针来完成，而且并不违背传值调用。</p>
+<p><strong>三、如何声明一个指针</strong></p>
+<p><strong>3.1 声明并初始化一个指针</strong></p>
+<p>　　指针其实就是一个变量，指针的声明方式与一般的变量声明方式没太大区别：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int *p;        &#x2F;&#x2F; 声明一个 int 类型的指针 p</span><br><span class="line">char *p        &#x2F;&#x2F; 声明一个 char 类型的指针 p</span><br><span class="line">int *arr[10]   &#x2F;&#x2F; 声明一个指针数组，该数组有10个元素，其中每个元素都是一个指向 int 类型对象的指针</span><br><span class="line">int (*arr)[10] &#x2F;&#x2F; 声明一个数组指针，该指针指向一个 int 类型的一维数组</span><br><span class="line">int **p;       &#x2F;&#x2F; 声明一个指针 p ，该指针指向一个 int 类型的指针</span><br></pre></td></tr></table></figure>
+
+<h6 id="指针的声明比普通变量的声明多了一个一元运算符-“”。运算符-“”-是间接寻址或者间接引用运算符。当它作用于指针时，将访问指针所指向的对象。在上述的声明中：-p-是一个指针，保存着一个地址，该地址指向内存中的一个变量；-p-则会访问这个地址所指向的变量。"><a href="#指针的声明比普通变量的声明多了一个一元运算符-“”。运算符-“”-是间接寻址或者间接引用运算符。当它作用于指针时，将访问指针所指向的对象。在上述的声明中：-p-是一个指针，保存着一个地址，该地址指向内存中的一个变量；-p-则会访问这个地址所指向的变量。" class="headerlink" title="　　指针的声明比普通变量的声明多了一个一元运算符 “”。运算符 “” 是间接寻址或者间接引用运算符。当它作用于指针时，将访问指针所指向的对象。在上述的声明中： p 是一个指针，保存着一个地址，该地址指向内存中的一个变量； *p 则会访问这个地址所指向的变量。"></a>　　指针的声明比普通变量的声明多了一个一元运算符 “<em>”。运算符 “</em>” 是间接寻址或者间接引用运算符。当它作用于指针时，将访问指针所指向的对象。在上述的声明中： p 是一个指针，保存着一个地址，该地址指向内存中的一个变量； *p 则会访问这个地址所指向的变量。</h6><p>　　声明一个指针变量并不会自动分配任何内存。在对指针进行间接访问之前，指针必须进行初始化：或是使他指向现有的内存，或者给他动态分配内存，否则我们并不知道指针指向哪儿，这将是一个很严重的问题，稍后会讨论这个问题。初始化操作如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 方法1：使指针指向现有的内存 *&#x2F;</span><br><span class="line">int x &#x3D; 1;</span><br><span class="line">int *p &#x3D; &amp;x;　　&#x2F;&#x2F; 指针 p 被初始化，指向变量 x ，其中取地址符 &amp; 用于产生操作数内存地址</span><br><span class="line"></span><br><span class="line">&#x2F;* 方法2：动态分配内存给指针 *&#x2F;</span><br><span class="line">int *p;</span><br><span class="line">p &#x3D; (int *)malloc(sizeof(int) * 10);　　　　&#x2F;&#x2F; malloc 函数用于动态分配内存</span><br><span class="line">free(p);　　　　&#x2F;&#x2F; free 函数用于释放一块已经分配的内存，常与 malloc 函数一起使用，要使用这两个函数需要头文件 stdlib.h</span><br></pre></td></tr></table></figure>
+
+<h6 id="指针的初始化实际上就是给指针一个合法的地址，让程序能够清楚地知道指针指向哪儿。"><a href="#指针的初始化实际上就是给指针一个合法的地址，让程序能够清楚地知道指针指向哪儿。" class="headerlink" title="　　指针的初始化实际上就是给指针一个合法的地址，让程序能够清楚地知道指针指向哪儿。"></a>　　指针的初始化实际上就是给指针一个合法的地址，让程序能够清楚地知道指针指向哪儿。</h6><p><strong>3.2 未初始化和非法的指针</strong> </p>
+<p>　　 如果一个指针没有被初始化，那么程序就不知道它指向哪里。它可能指向一个非法地址，这时，程序会报错，在 Linux 上，错误类型是 Segmentation fault（core dumped），提醒我们段违例或内存错误。它也可能指向一个合法地址，实际上，这种情况更严重，你的程序或许能正常运行，但是这个没有被初始化的指针所指向的那个位置的值将会被修改，而你并无意去修改它。用一个例子简单的演示一下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int *p;</span><br><span class="line">    *p &#x3D; 1;</span><br><span class="line">    printf(&quot;%d\n&quot;,*p);</span><br><span class="line"></span><br><span class="line">    return 0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>　　这个程序可以编译通过，但是运行的话会报错，报错信息如下：</p>
+<p><img src="https://ae01.alicdn.com/kf/Hbc4e0adf0ed64ffd9e2635f250554dbbi.png" alt="img"></p>
+<p>　　要想使这个程序运行起来，需要先对指针 p 进行初始化：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int x &#x3D; 1;  </span><br><span class="line">    int *p &#x3D; &amp;x;</span><br><span class="line">    printf(&quot;%d\n&quot;,*p);</span><br><span class="line">　  *p &#x3D; 2;</span><br><span class="line">    printf(&quot;%d\n&quot;,*p);</span><br><span class="line"></span><br><span class="line">    return 0;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>　　这段代码的输出结果如下：</p>
+<p><img src="https://ae01.alicdn.com/kf/H05cf706cf47b47e889eb1b3aa1b39c765.png" alt="img"> </p>
+<p>　　可以看到，对指针进行初始化后，便可以正常对指针进行赋值了。 </p>
+<p><strong>3.3 NULL指针</strong></p>
+<p>　　<strong>NULL 指针是一个特殊的指针变量，表示不指向任何东西</strong>。可以通过给一个指针赋一个零值来生成一个 NULL 指针。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int *p &#x3D; NULL;</span><br><span class="line">    printf(&quot;p的地址为%d\n&quot;,p);</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;***************</span><br><span class="line"> * 程序输出：</span><br><span class="line"> * p的地址为0</span><br><span class="line">***************&#x2F;</span><br></pre></td></tr></table></figure>
+
+<p>　　可以看到指针指向内存地址0。在大多数的操作系统上，程序不允许访问地址为 0 的内存，因为该内存是为操作系统保留的。但是，内存地址 0 有一个特别重要的意义，它表明改指针不指向一个可访问的内存位置。</p>
+<p><strong>四、指针的运算</strong></p>
+<p>　　C 指针的算术运算只限于两种形式：</p>
+<p>1） 指针 +/- 整数 ：</p>
+<p>　　 可以对指针变量 p 进行 p++、p–、p + i 等操作，所得结果也是一个指针，只是指针所指向的内存地址相比于 p 所指的内存地址前进或者后退了 i 个操作数。用一张图来说明一下：</p>
+<p><img src="https://img2018.cnblogs.com/blog/765389/201809/765389-20180921154218407-1813012241.png" alt="img"></p>
+<p>　　在上图中，10000000等是内存地址的十六进制表示（数值是假定的），p 是一个 int 类型的指针，指向内存地址 0x10000008 处。则 p++ 将指向与 p 相邻的下一个内存地址，由于 int 型数据占 4 个字节，因此 p++ 所指的内存地址为 1000000b。其余类推。不过要注意的是，这种运算并不会改变指针变量 p 自身的地址，只是改变了它所指向的地址。举个例子：</p>
+<p>2）指针 - 指针</p>
+<p>　　只有当两个指针都指向同一个数组中的元素时，才允许从一个指针减去另一个指针。两个指针相减的结果的类型是 ptrdiff_t，它是一种有符号整数类型。减法运算的值是两个指针在内存中的距离（以数组元素的长度为单位，而不是以字节为单位），因为减法运算的结果将除以数组元素类型的长度。举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int a[10] &#x3D; &#123;1,2,3,4,5,6,7,8,9,0&#125;;</span><br><span class="line">    int sub;</span><br><span class="line">    int *p1 &#x3D; &amp;a[2];</span><br><span class="line">    int *p2 &#x3D; &amp;a[8];</span><br><span class="line"></span><br><span class="line">    sub &#x3D; p2-p1;                                                                            </span><br><span class="line">    printf(&quot;%d\n&quot;,sub);　　　　&#x2F;&#x2F; 输出结果为 6</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>五、指针与数组</strong></p>
+<p>　　在C语言中，指针与数组之间的关系十分密切。实际上，许多可以用数组完成的工作都可以使用指针来完成。一般来说，用指针编写的程序比用数组编写的程序执行速度快，但另一方面，用指针实现的程序理解起来稍微困难一些。</p>
+<p><strong>5.1 指针与数组的关系</strong></p>
+<p>　　我们先声明一个数组：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int a[10];        &#x2F;&#x2F; 声明一个int类型的数组，这个数组有10个元素</span><br></pre></td></tr></table></figure>
+
+<p>　　我们可以用 a[0]、a[1]、…、a[9] 来表示这个数组中的10个元素，这10个元素是存储在一段连续相邻的内存区域中的。</p>
+<p>　　接下来，我们再声明一个指针：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int *p;           &#x2F;&#x2F; 声明一个int类型的指针变量</span><br></pre></td></tr></table></figure>
+
+<p>　　 p 是一个指针变量，指向内存中的一个区域。如果我们对指针 p 做如下的初始化：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p &#x3D; &amp;a[0];        &#x2F;&#x2F; 对指针进行初始化，p将指向数组 a 的第 1 个元素 a[0]</span><br></pre></td></tr></table></figure>
+
+<p>　　我们知道，对指针进行自增操作会让指针指向与当前元素相邻的下一个元素，即 <em>(p + 1) 将指向 a[1] ；同样的， <em>(p + i) 将指向 a[i] 。因此，我们可以使用该指针来遍历数组 a[10] 的所有元素。可以看到，数组下标与指针运算之间的关系是一一对应的。而根据定义，</em></em>数组类型的变量或表达式的值是该数组第 1 个元素的地址**，且数组名所代表的的就是该数组第 1 个元素的地址，故，上述赋值语句可以直接写成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p &#x3D; a;        &#x2F;&#x2F; a 为数组名，代表该数组最开始的一个元素的地址 </span><br></pre></td></tr></table></figure>
+
+<p>　　很显然，<strong>一个通过数组和下标实现的表达式可以等价地通过指针及其偏移量来实现</strong>，这就是数组和指针的互通之处。但有一点要明确的是，数组和指针并不是完全等价，<em>指针是一个变量，而数组名不是变量，它数组中第 1 个元素的地址</em>，数组可以看做是一个用于保存变量的容器。更直接的方法，我们可以直接看二者的地址，并不一样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;                                                                          </span><br><span class="line"> </span><br><span class="line">int main()&#123;</span><br><span class="line">    int x[10] &#x3D; &#123;1,2,3,4,5,6,7,8,9,0&#125;;</span><br><span class="line">    int *p &#x3D; x;</span><br><span class="line">    printf(&quot;x的地址为：%p\n&quot;,x);</span><br><span class="line">    printf(&quot;x[0]的地址为：%p\n&quot;,&amp;x[0]);</span><br><span class="line">    printf(&quot;p的地址为：%p\n&quot;,&amp;p);　　　　　　&#x2F;&#x2F; 打印指针 p 的地址，并不是指针所指向的地方的地址</span><br><span class="line"></span><br><span class="line">    p +&#x3D; 2;</span><br><span class="line">    printf(&quot;*(p+2)的值为：%d\n&quot;,*p);　　　　&#x2F;&#x2F; 输出结果为 3，*(p+2)指向了 x[2]</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>　　结果如下：</p>
+<p><img src="https://img2018.cnblogs.com/blog/765389/201809/765389-20180918160417548-189120951.png" alt="img"></p>
+<p>　　可以看到， x 的值与 x[0] 的地址是一样的，也就是说数组名即为数组中第 1 个元素的地址。实际上，打印 &amp;x 后发现，x 的地址也是这个值。而 x 的地址与指针变量 p 的地址是不一样的。故而数组和指针并不能完全等价。</p>
+<p>（笔者注：上述输出结果是在 centos7 64bit 的环境下使用 gcc 编译器得到的，可以看到地址是一个12位的十六进制数，转换成二进制是48位，也就是说寻址空间有 256TB，但是笔者的电脑只有 8GB 内存，猜测是不是由于 linux 系统开启了内存分页机制，这里寻址的是虚拟地址？另外，在Windows下使用 vs2015 编译运行的话，则输出结果是一个 8位的十六进制数，也就是32位二进制，寻址空间为 4GB） </p>
+<p><strong>5.2 指针数组</strong></p>
+<p>　　指针是一个变量，而数组是用于存储变量的容器，因此，指针也可以像其他变量一样存储在数组中，也就是指针数组。 <strong>指针数组是一个数组，数组中的每一个元素都是指针</strong>。声明一个指针数组的方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int *p[10];    &#x2F;&#x2F; 声明一个指针数组，该数组有10个元素，其中每个元素都是一个指向int类型的指针</span><br></pre></td></tr></table></figure>
+
+<p>　　在上述声明中，由于 [] 的优先级比 * 高，故 p 先与 [] 结合，成为一个数组 p[]；再由 int * 指明这是一个 int 类型的指针数组，数组中的元素都是 int 类型的指针。数组的第 i 个元素是 *p[i]，而 <strong>p[i] 是一个指针</strong>。由于指针数组中存放着多个指针，操作灵活，在一些需要操作大量数据的程序中使用，可以使程序更灵活快速。</p>
+<p><strong>5.3 数组指针</strong></p>
+<p>　　<strong>数组指针是一个指针，它指向一个数组</strong>。声明一个数组指针的方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int (*p)[10];        &#x2F;&#x2F; 声明一个数组指针 p ，该指针指向一个数组</span><br></pre></td></tr></table></figure>
+
+<p>　　由于 () 的优先级最高，所以 p 是一个指针，指向一个 int 类型的一维数组，这个一维数组的长度是 10，这也是指针 p 的步长。也就是说，执行 p+1 时，p 要跨过 n 个 int 型数据的长度。数组指针与二维数组联系密切，可以用数组指针来指向一个二维数组，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    int arr[2][3] &#x3D; &#123;1,2,3,4,5,6&#125;;               &#x2F;&#x2F; 定义一个二维数组并初始化</span><br><span class="line">    int (*p)[3];                                 &#x2F;&#x2F; 定义一个数组指针，指针指向一个含有3个元素的一维数组</span><br><span class="line"></span><br><span class="line">    p &#x3D; arr;                                     &#x2F;&#x2F; 将二维数组的首地址赋给 p，此时 p 指向 arr[0] 或 &amp;arr[0][0]</span><br><span class="line">    printf(&quot;%d\n&quot;,(*p)[0]);　　　　　　　　　　　　  &#x2F;&#x2F; 输出结果为 1</span><br><span class="line">    p++;　　　　　　　　　　　　　　　　　　　　　　　　 &#x2F;&#x2F; 对 p 进行算术运算，此时 p 将指向二维数组的下一行的首地址，即 &amp;arr[1][0]</span><br><span class="line">    printf(&quot;%d\n&quot;,(*p)[1]);                      &#x2F;&#x2F; 输出结果为5</span><br><span class="line"></span><br><span class="line">    return 0;                                                                               </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<p><strong>六、指针与结构</strong></p>
+<p><strong>6.1 简单介绍一下结构</strong></p>
+<p>　　结构是一个或多个变量的集合，这些变量可能为不同的类型，为了处理的方便而将这些变量组织在一个名字之下。由于结构将一组相关的变量看做一个单元而不是各自独立的实体，因此结构有助于组织复杂的数据，特别是在大型的程序中。声明一个结构的方式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">struct message&#123;　　　　　　      &#x2F;&#x2F; 声明一个结构 message</span><br><span class="line">    char name[10];             &#x2F;&#x2F; 成员</span><br><span class="line">    int age;</span><br><span class="line">    int score;  </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">typedef struct message s_message;　　　　 &#x2F;&#x2F; 类型定义符 typedef</span><br><span class="line"></span><br><span class="line">s_message mess &#x3D; &#123;&quot;tongye&quot;,23,83&#125;;　　　　&#x2F;&#x2F; 声明一个 struct message 类型的变量 mess,并对其进行初始化　</span><br><span class="line"></span><br><span class="line">--------------------------------------------------------------------------------------------------------------</span><br><span class="line">&#x2F;* 另一种更简便的声明方法 *&#x2F;</span><br><span class="line">typedef struct&#123;</span><br><span class="line">　　char name[10];</span><br><span class="line">　　int age;</span><br><span class="line">　　int score;</span><br><span class="line">&#125;message;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>　　可以使用 <strong>结构名.成员</strong> 的方式来访问结构中的成员，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">　　printf(&quot;%s\n&quot;,mess.name);　　　　&#x2F;&#x2F; 输出结果：tongye</span><br><span class="line">　　printf(&quot;%d\n&quot;,mess.age);　　　　 &#x2F;&#x2F; 输出结果：23</span><br><span class="line"></span><br><span class="line">　　return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>6.2 结构指针</strong>　</p>
+<p>　　结构指针是指向结构的指针，以上面的结构为例，可以这样定义一个结构指针：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">s_message *p;        &#x2F;&#x2F; 声明一个结构指针 p ，该指针指向一个 s_message 类型的结构</span><br><span class="line">*p &#x3D; &amp;mess;　　　　　　&#x2F;&#x2F; 对结构指针的初始化与普通指针一样，也是使用取地址符 &amp;</span><br></pre></td></tr></table></figure>
+
+<p>　　C语言中使用 -&gt; 操作符来访问结构指针的成员，举个例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line"></span><br><span class="line">typedef struct&#123;</span><br><span class="line">    char name[10];</span><br><span class="line">    int age;</span><br><span class="line">    int score;  </span><br><span class="line">&#125;message;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">    message mess &#x3D; &#123;&quot;tongye&quot;,23,83&#125;;</span><br><span class="line">    message *p &#x3D; &amp;mess;</span><br><span class="line"></span><br><span class="line">    printf(&quot;%s\n&quot;,p-&gt;mess);　　　　　　&#x2F;&#x2F; 输出结果为：tongye</span><br><span class="line">    printf(&quot;%d\n&quot;,p-&gt;score);         &#x2F;&#x2F; 输出结果为：83</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<p><strong>七、指针与函数</strong></p>
+<p>　　<strong>C语言的所有参数均是以“传值调用”的方式进行传递的</strong>，这意味着函数将获得参数值的一份拷贝。这样，函数可以放心修改这个拷贝值，而不必担心会修改调用程序实际传递给它的参数。 </p>
+<p><strong>7.1 指针作为函数的参数</strong></p>
+<p>　　传值调用的好处是是被调函数不会改变调用函数传过来的值，可以放心修改。但是有时候需要被调函数回传一个值给调用函数，这样的话，传值调用就无法做到。为了解决这个问题，可以使用传指针调用。**指针参数使得被调</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line"></span><br><span class="line">void swap1(int a,int b)　　　　　　  &#x2F;&#x2F; 参数为普通的 int 变量</span><br><span class="line">&#123;</span><br><span class="line">　　int temp;</span><br><span class="line">　　temp &#x3D; a;</span><br><span class="line">　　a &#x3D; b;</span><br><span class="line">　　b &#x3D; temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void swap2(int *a,int *b)　　　　　　&#x2F;&#x2F; 参数为指针，接受调用函数传递过来的变量地址作为参数，对所指地址处的内容进行操作</span><br><span class="line">&#123;</span><br><span class="line">　　int temp;　　　　                &#x2F;&#x2F; 最终结果是，地址本身并没有改变，但是这一地址所对应的内存段中的内容发生了变化，即x,y的值发生了变化</span><br><span class="line">　　temp &#x3D; *a;</span><br><span class="line">　　*a &#x3D; *b;</span><br><span class="line">　　*b &#x3D; temp;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">　　int x &#x3D; 1,y &#x3D; 2;</span><br><span class="line">　　swap1(x,y);                     &#x2F;&#x2F; 将 x,y 的值本身作为参数传递给了被调函数</span><br><span class="line">　　printf(&quot;%d %5d\n&quot;,x,y);         &#x2F;&#x2F; 输出结果为：1     2</span><br><span class="line"></span><br><span class="line">　　swap(&amp;x,&amp;y);                    &#x2F;&#x2F; 将 x,y 的地址作为参数传递给了被调函数，传递过去的也是一个值，与传值调用不冲突</span><br><span class="line">　　printf(&quot;%d %5d\n&quot;,x,y);         &#x2F;&#x2F; 输出结果为：2     1</span><br><span class="line">　　return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>7.2 指向函数的指针</strong></p>
+<p>　　在C语言中，函数本身不是变量，但是可以定义指向函数的指针，也称作函数指针，函数指针指向函数的入口地址。这种类型的指针可以被赋值、存放在数组中、传递给函数以及作为函数的返回值等等。 声明一个函数指针的方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">返回值类型 （* 指针变量名）（[形参列表]）;</span><br><span class="line"></span><br><span class="line">int (*pointer)(int *,int *);        &#x2F;&#x2F; 声明一个函数指针</span><br></pre></td></tr></table></figure>
+
+<p>　　上述代码声明了一个函数指针 pointer ，该指针指向一个函数，函数具有两个 int * 类型的参数，且返回值类型为 int。下面的代码演示了函数指针的用法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;stdio.h&quot;</span><br><span class="line">#include &quot;string.h&quot;</span><br><span class="line"></span><br><span class="line">int str_comp(const char *m,const char *n);                             &#x2F;&#x2F; 声明一个函数 str_comp，该函数有两个 const char 类型的指针，函数的返回值为 int 类型</span><br><span class="line">void comp(char *a,char *b,int (*prr)(const char *,const char*));       &#x2F;&#x2F; 声明一个函数 comp ,注意该函数的第三个参数，是一个函数指针</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    char str1[20];      &#x2F;&#x2F; 声明一个字符数组</span><br><span class="line">    char str2[20];</span><br><span class="line">    int (*p)(const char *,const char *) &#x3D; str_comp;　　　　　　　　　　　 &#x2F;&#x2F; 声明并初始化一个函数指针，该指针所指向的函数有两个 const char 类型的指针，且返回值为 int 类型</span><br><span class="line">    gets(str1);         &#x2F;&#x2F; 使用 gets() 函数从 I&#x2F;O 读取一行字符串</span><br><span class="line">    gets(str2);</span><br><span class="line">    comp(str1,str2,p);  &#x2F;&#x2F; 函数指针 p 作为参数传给 comp 函数</span><br><span class="line"></span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int str_comp(const char *m,const char *n)</span><br><span class="line">&#123;</span><br><span class="line">　　 &#x2F;&#x2F; 库函数 strcmp 用于比较两个字符串，其原型是： int strcmp(const char *s1,const char *s2);</span><br><span class="line">    if(strcmp(m,n) &#x3D;&#x3D; 0) </span><br><span class="line">        return 0;</span><br><span class="line">    else</span><br><span class="line">        return 1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 函数 comp 接受一个函数指针作为它的第三个参数 *&#x2F;</span><br><span class="line">void comp(char *a,char *b,int (*prr)(const char *,const char*))</span><br><span class="line">&#123;</span><br><span class="line">    if((*prr)(a,b) &#x3D;&#x3D; 0)</span><br><span class="line">        printf(&quot;str1 &#x3D; str2\n&quot;);</span><br><span class="line">    else</span><br><span class="line">        printf(&quot;str1 !&#x3D; str2\n&quot;);</span><br><span class="line">&#125; [![复制代码](https:&#x2F;&#x2F;common.cnblogs.com&#x2F;images&#x2F;copycode.gif)](javascript:void(0);</span><br></pre></td></tr></table></figure>
+
+<p>　　这段代码的功能是从键盘读取两行字符串（长度不超过20），判断二者是否相等。</p>
+<p>　　注意，声明一个函数指针时，() 不能漏掉，否则：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int *p(void *,void*);</span><br></pre></td></tr></table></figure>
+
+<p>　　这表明 p 是一个函数，该函数返回一个指向 int 类型的指针。</p>
+<h3 id="课后练习"><a href="#课后练习" class="headerlink" title="课后练习"></a>课后练习</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>判断输出</span><br><span class="line">    <span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;pch.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p=<span class="number">2</span>;</span><br><span class="line">	<span class="keyword">int</span> *k = &amp;p;</span><br><span class="line">	<span class="keyword">int</span> *q = k;</span><br><span class="line">	<span class="keyword">int</span> &amp;b = p;</span><br><span class="line">	<span class="keyword">int</span> &amp;a = &amp;p;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; k &lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt; q &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; *k &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; *q&lt;&lt;<span class="string">&quot; &quot;</span>&lt;&lt;b&lt;&lt;a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;pch.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> a[<span class="number">5</span>] = &#123; <span class="number">0</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">8</span> &#125;;</span><br><span class="line">	<span class="keyword">char</span> b[<span class="number">5</span>] = <span class="string">&quot;abcd&quot;</span>;</span><br><span class="line">	<span class="keyword">int</span> *pa = a;</span><br><span class="line">	<span class="keyword">char</span> *pb = b;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">1</span>&lt;&lt;<span class="string">&#x27; &#x27;</span>&lt;&lt; pa &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">2</span> &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; pb &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">3</span> &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; *pa &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">4</span> &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; *pb &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">5</span> &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; *(pa + <span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">6</span> &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; *(pb + <span class="number">2</span>) &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">7</span> &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; *pa + <span class="number">2</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">8</span> &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; *pb + <span class="number">2</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">9</span> &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; pa + <span class="number">2</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	<span class="built_in">cout</span> &lt;&lt; <span class="number">10</span> &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; pb + <span class="number">2</span> &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">&#125;</span><br><span class="line">	<span class="comment">//cout &lt;&lt; *pb++ &lt;&lt; *pb++ &lt;&lt; *pb++ &lt;&lt; endl;//cout 输出流是从endl向cout输出进行运算的；//错误的</span></span><br><span class="line"><span class="comment">//&amp;引用的应用</span></span><br><span class="line"><span class="comment">/*	int i;</span></span><br><span class="line"><span class="comment">	char s1[]=&quot;StringPointer&quot;;</span></span><br><span class="line"><span class="comment">	char *sp = s1;</span></span><br><span class="line"><span class="comment">	cout &lt;&lt; sp &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">	cout &lt;&lt; s1 + 6 &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">	char s2[10];</span></span><br><span class="line"><span class="comment">	for (i = 0;i &lt; 6;i++)</span></span><br><span class="line"><span class="comment">	&#123;</span></span><br><span class="line"><span class="comment">		s2[i] = sp[i];</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	s2[i] = 0;</span></span><br><span class="line"><span class="comment">	cout &lt;&lt; s2 &lt;&lt; &#x27; &#x27; &lt;&lt; &amp;s1[6] &lt;&lt; endl;*/</span></span><br><span class="line"><span class="comment">//动态分配（易错）</span></span><br><span class="line"><span class="comment">/*int *a;</span></span><br><span class="line"><span class="comment">	int n, i;</span></span><br><span class="line"><span class="comment">	cin &gt;&gt; n;</span></span><br><span class="line"><span class="comment">	a = new int[n];</span></span><br><span class="line"><span class="comment">	for (i = 0;i &lt; n;i++)</span></span><br><span class="line"><span class="comment">	&#123;</span></span><br><span class="line"><span class="comment">		a[i] = i;</span></span><br><span class="line"><span class="comment">	&#125;</span></span><br><span class="line"><span class="comment">	cout &lt;&lt; a[0] &lt;&lt; endl;</span></span><br><span class="line"><span class="comment">	a++;</span></span><br><span class="line"><span class="comment">	cout &lt;&lt; a[1];*/</span></span><br><span class="line"><span class="comment">//指针的基础使用</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">char a[27] = &quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;</span></span><br><span class="line"><span class="comment">	int b[6] = &#123; 1,3,5,7,9,11 &#125;;</span></span><br><span class="line"><span class="comment">	char *p1 = a, *p2;</span></span><br><span class="line"><span class="comment">	int *q1 = b, *q2;</span></span><br><span class="line"><span class="comment">	p2 = p1 + 14;</span></span><br><span class="line"><span class="comment">	q2 = q1 + 2;</span></span><br><span class="line"><span class="comment">	cout&lt;&lt;*p1&lt;&lt;&#x27; &#x27;&lt;&lt;*p2&lt;&lt;&#x27; &#x27;&lt;&lt;*(p2-9)&lt;&lt;endl;</span></span><br><span class="line"><span class="comment">	cout&lt;&lt;*q1&lt;&lt;&#x27; &#x27;&lt;&lt;*q2&lt;&lt;&#x27; &#x27;&lt;&lt;*(q2+3)&lt;&lt;endl;*/</span></span><br></pre></td></tr></table></figure>
+
+
+  </div>
+  
+  <div class="article-tags">
+    
+      <a class="tag-none-link" href="/tags/%E5%85%A5%E9%97%A8%E8%AE%B2%E8%A7%A3/" rel="tag">入门讲解</a>
+    
+  </div>
+
+  
+  <section id="comments" class="white-box">
+    
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    
+	</section>
+	
+
+</article>
+
+      <script>document.getElementById("loading-bar").style.width="60%";</script>
+    </main>
+    
+<footer id="footer" class="clearfix">
+	
+	<div class="search">
+	  <form name="searchform" id="searchform" class="u-search-form">
+	    <input type="text" id="searchinput" 
+				class="u-search-input st-default-search-input"
+				data-list-highlight="true" 
+				data-list-value-completion="true" 
+				placeholder="Looking for something?" />
+	    <button type="submit" id="u-search-btn-submit" class="u-search-btn-submit">
+	      <span class="icon icon-search"></span>
+	    </button>
+	  </form>
+	</div>
+	
+  <div>&copy; <a href="http://example.com">Molu</a> Theme by <a href="http://artifact.me/" target="_blank">Art Chen</a>.</div>
+  <div>Powered by <a target="_blank" href="https://hexo.io/" rel="external noopener">Hexo</a>.</div>
+</footer>
+
+
+    <script>document.getElementById("loading-bar").style.width="80%";</script>
+    <div class="overlay"></div>
+  </div>
+  <div class="site-sidebar">
+
+	
+	
+	<div class="sidebar-switch clearfix "
+		style="display: none">
+		<a class="dark-btn active" data-toggle="toc">
+	    <span class="icon icon-list"></span>
+	    <span class="text">Index</span>
+	  </a>
+	  <a class="dark-btn" data-toggle="bio">
+	    <span class="icon icon-person"></span>
+	    <span class="text">Bio</span>
+	  </a>
+	</div>
+
+	<div class="site-toc "
+		style="display: none">
+		
+	    <div class="no-index">No Index</div>
+	  
+  </div>
+  
+	<div class="site-bio show"
+		style="display: block">
+		
+	  <!-- About Me -->
+	  <div class="about-me clearfix">
+	    <div class="avatar">
+	      <img src="/img/avatar.png" />
+	    </div>
+	    <div class="info">
+	      <a class="name dark-btn" href="/about">
+	        Rick Smith
+	      </a>
+	    </div>
+	    <div class="info">
+	      <span class="item desc">
+	        
+	      </span>
+	    </div>
+	  </div>
+	
+	  <!-- Social Icons -->
+	  <div class="social clearfix">
+	    
+	      
+	        <a href="/atom.xml" class="feed"
+	          target="_blank" rel="external">
+	          <span class="icon icon-feed"></span>
+	        </a>
+	      
+	        <a href="https://github.com/artchen" class="github"
+	          target="_blank" rel="external">
+	          <span class="icon icon-github"></span>
+	        </a>
+	      
+	    
+	  </div>
+
+	</div>
+
+	<div class="shortcuts">
+		<a href="#header" class="top window-nav dark-btn" id="go-top">
+			<span class="icon icon-chevron-thin-up"></span>
+		</a>
+		<a class="close dark-btn" id="sidebar-close">
+			<span class="icon icon-close"></span>
+		</a>
+		<a href="#footer" class="top window-nav dark-btn" id="go-bottom">
+			<span class="icon icon-chevron-thin-down"></span>
+		</a>
+	</div>
+
+</div>
+
+  <!-- Universal Search -->
+
+<script type="text/javascript">
+  var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+  var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+  var ALGOLIA_API_KEY = "";
+  var ALGOLIA_APP_ID = "";
+  var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "google";
+  var universalSearchConfig = {};
+  if (SEARCH_SERVICE === 'google') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: GOOGLE_CUSTOM_SEARCH_API_KEY,
+      engineId: GOOGLE_CUSTOM_SEARCH_ENGINE_ID,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'algolia') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: ALGOLIA_API_KEY,
+      appId: ALGOLIA_APP_ID,
+      indexName: ALGOLIA_INDEX_NAME,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'azure') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      serviceName: AZURE_SERVICE_NAME,
+      indexName: AZURE_INDEX_NAME,
+      apiKey: AZURE_QUERY_KEY,
+      imagePath: "/img/"
+    };
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery.js"><\/script>')</script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/app.js"></script>
+
+
+<!-- Disqus -->
+
+
+<script type="text/javascript">
+  var disqus_shortname = 'molu';
+  
+  var disqus_url = 'http://example.com/2019/11/02/C%E8%AF%AD%E8%A8%80%E6%8C%87%E9%92%88%E8%AE%B2%E8%A7%A3/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<!-- Valine -->
+
+
+<!-- Swiftype -->
+<!-- Please replace with your own swiftype settings -->
+<!--
+<script type="text/javascript">
+  /* Swiftype */
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','FHMeAyBdVccJECstf-XJ','2.0.0');
+</script>
+-->
+
+  <script>document.getElementById("loading-bar").style.width="100%";</script>
+</body>
+</html>

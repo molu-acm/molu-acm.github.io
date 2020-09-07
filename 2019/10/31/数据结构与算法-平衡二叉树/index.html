@@ -1,0 +1,427 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>数据结构与算法--平衡二叉树 | Molu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="数据结构与算法——平衡二叉树1 引言  二叉树是数据结构中的重点与难点，也是应用较为广泛的一类数据结构。二叉树的基础知识在之前的数据结构与算法——二叉树基础中已经详细介绍。本篇文章将着重介绍两类二叉树，二叉搜索树和平衡二叉树。 2 二叉搜索树2.1 定义  二叉搜索树又称二叉查找树，亦称为二叉排序树。设x为二叉查找树中的一个节点，x节点包含关键字key，节点x的key值记为key[x]。如果y是x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法--平衡二叉树">
+<meta property="og:url" content="http://example.com/2019/10/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/index.html">
+<meta property="og:site_name" content="Molu">
+<meta property="og:description" content="数据结构与算法——平衡二叉树1 引言  二叉树是数据结构中的重点与难点，也是应用较为广泛的一类数据结构。二叉树的基础知识在之前的数据结构与算法——二叉树基础中已经详细介绍。本篇文章将着重介绍两类二叉树，二叉搜索树和平衡二叉树。 2 二叉搜索树2.1 定义  二叉搜索树又称二叉查找树，亦称为二叉排序树。设x为二叉查找树中的一个节点，x节点包含关键字key，节点x的key值记为key[x]。如果y是x">
+<meta property="og:locale">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/b6127a1a685f51775370658146bcdd82.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/b572e302aead56b625e94e400c5b5c1a.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/935a76056b93ad4b620c01be0cf31311.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/345efd0ae02be18cbc25b92c518d156b.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/3f7bd1b7062cbbffecc5bcf38ef020ab.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/a83dc468dc9598784a68cbf33f4a9b20.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/3717a705b9dfe0a39f7553937195e209.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/3e864bdb6f9b7049184cbe57407f16e2.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/aeebafd749d590355f9f061a4c11dce3.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/c23f52a549d1bc70dc64e7a901ebdd24.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/72686dbdfe520a06d5ff6fc133b76810.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/82f2367ec04e1ee753eeb5dece1edf1c.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/f2d26b71e2ff26f79c4b7ccf0116a20c.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/8e6ff094642e31da191436b6d3e2deec.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/d46d86ed6a22896b82e5e5c2c0f7c9ff.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/c620190798fdd2cad4761e9b4b3e0f79.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/c068581a1ba17cf5a0c2982ed7cad89d.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/e67b88f8ee337bed83c6a1727dafd76a.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/aa8e86fd58e6bf9bc944c604729fe6bb.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/b0f5bb03e5c371ffdc14dbc01baaa0e6.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/c59dff08018e5afb4d2a841b9de41c41.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/51bef5f8b56b9be94f990ec67b85ba63.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/5408f1dfe2eb60a1850dcc9d843fda87.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/33cc9eca713c95e4c0e3b13a321ad56c.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/e248da9174120d2d9395051adeec905e.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/ea63ed172e870b3e3986f94643bda692.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/5a57ef49f52993c14d2d1a57ba5a9fb4.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/4f06760bd599b1518b7debd38296fd9e.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/a50f0100c7191342f6e7574cb50fa162.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/f5a5edd7506b6b3f7e80d74f1708098d.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/a159987496c5732b363cb637b1ac4922.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/2a03ff41e16a1d1321780732ad3af7d5.png">
+<meta property="article:published_time" content="2019-10-31T12:20:24.000Z">
+<meta property="article:modified_time" content="2019-10-31T12:25:48.000Z">
+<meta property="article:author" content="Rick Smith">
+<meta property="article:tag" content="数论和图论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.xiaozhuanlan.com/photo/2019/b6127a1a685f51775370658146bcdd82.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+	<!-- If needed, replace your own web font service -->
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,700|Inconsolata|Oswald" rel="stylesheet" />
+
+  
+   
+  
+<link rel="stylesheet" href="/icomoon/style.css">
+
+  
+<link rel="stylesheet" href="/style.css">
+
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div class="site-wrapper is_post_page">
+    <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+<script>document.getElementById("loading-bar").style.width="20%";</script>
+
+
+<header id="header" class="site-header clearfix">
+
+  <a class="logo square clearfix" href="/">
+    <!-- 
+      Replace with your own size name, for example:
+      <span class="b">A</span>
+      <span class="w">B</span>
+      <span class="b">C</span>
+     -->
+     <span class="b">M</span>
+     <span class="b">O</span>
+     <span class="b">L</span>
+     <span class="w">U</span>
+     <span class="w">-</span>
+     <span class="b">Q</span>
+     <span class="b">w</span>
+     <span class="b">Q</span>
+  </a>
+  <a class="me square site-nav-switch clearfix">
+    <span class="b">
+    	<span class="icon icon-menu"></span>
+    </span>
+  </a>
+
+</header>
+
+    <script>document.getElementById("loading-bar").style.width="40%";</script>
+    <main id="main" class="clearfix">
+      <article id="post-数据结构与算法-平衡二叉树"
+  class="article white-box article-type-post"
+  itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    <h1 class="article-title" itemprop="name">
+      数据结构与算法--平衡二叉树
+    </h1>
+    <div class="article-meta">
+      Posted on 
+      <time class="article-time" datetime="2019-10-31T12:20:24.000Z" itemprop="datePublished">
+        Oct 31, 2019
+      </time>
+    </div>
+  </header>
+
+  <div class="article-entry" itemprop="articleBody">
+    <h1 id="数据结构与算法——平衡二叉树"><a href="#数据结构与算法——平衡二叉树" class="headerlink" title="数据结构与算法——平衡二叉树"></a><strong>数据结构与算法——平衡二叉树</strong></h1><h1 id="1-引言"><a href="#1-引言" class="headerlink" title="1 引言"></a>1 引言</h1><p>  二叉树是数据结构中的重点与难点，也是应用较为广泛的一类数据结构。二叉树的基础知识在之前的数据结构与算法——二叉树基础中已经详细介绍。本篇文章将着重介绍两类二叉树，二叉搜索树和平衡二叉树。</p>
+<h1 id="2-二叉搜索树"><a href="#2-二叉搜索树" class="headerlink" title="2 二叉搜索树"></a>2 二叉搜索树</h1><h2 id="2-1-定义"><a href="#2-1-定义" class="headerlink" title="2.1 定义"></a>2.1 定义</h2><p>  二叉搜索树又称二叉查找树，亦称为二叉排序树。设x为二叉查找树中的一个节点，x节点包含关键字key，节点x的key值记为key[x]。如果y是x的左子树中的一个节点，则key[y] &lt;= key[x]；如果y是x的右子树的一个节点，则key[y] &gt;= key[x]。</p>
+<h2 id="2-2-性质"><a href="#2-2-性质" class="headerlink" title="2.2 性质"></a>2.2 性质</h2><p>  （1）若左子树不空，则左子树上所有节点的值均小于它的根节点的值；<br>  （2）若右子树不空，则右子树上所有节点的值均大于它的根节点的值；<br>  （3）左、右子树也分别为二叉搜索树；</p>
+<p>  例如：图2.2.1所示的二叉树为一棵二叉搜索树。<br><img src="https://images.xiaozhuanlan.com/photo/2019/b6127a1a685f51775370658146bcdd82.png" alt="图2.2.1"></p>
+<p>图2.2.1</p>
+<p>  例如：图2.2.2所示不是一棵二叉搜索树，因为节点40的左孩子节点值为44，不满足二叉搜索树的定义。<br><img src="https://images.xiaozhuanlan.com/photo/2019/b572e302aead56b625e94e400c5b5c1a.png" alt="图2.2.2"></p>
+<p>图2.2.2</p>
+<h2 id="2-3-节点结构"><a href="#2-3-节点结构" class="headerlink" title="2.3 节点结构"></a>2.3 节点结构</h2><p>  二叉树的节点结构通常包含三部分，其中有：左孩子的指针，右孩子指针以及数据域。节点的图示如下：<br><img src="https://images.xiaozhuanlan.com/photo/2019/935a76056b93ad4b620c01be0cf31311.png" alt="img"></p>
+<p><strong>代码定义：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 二叉树的二叉链表节点结构定义 *&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;* 节点结构 *&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">struct BSTNode </span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    int key;   &#x2F;&#x2F;节点数据 </span><br><span class="line"></span><br><span class="line">    struct BSTNode *lchild, *rchild;    &#x2F;* 左右孩子指针 *&#x2F;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-4-创建二叉搜索树"><a href="#2-4-创建二叉搜索树" class="headerlink" title="2.4 创建二叉搜索树"></a>2.4 创建二叉搜索树</h2><p>  现有序列：A = {61, 87, 59, 47, 35, 73, 51, 98, 37, 93}。根据此序列构造二叉搜索树过程如下：</p>
+<p>  （1）i = 0，A[0] = 61，节点61作为根节点；<br>  （2）i = 1，A[1] = 87，87 &gt; 61，且节点61右孩子为空，故81为61节点的右孩子；<br>  （3）i = 2，A[2] = 59，59 &lt; 61，且节点61左孩子为空，故59为61节点的左孩子；<br>  （4）i = 3，A[3] = 47，47 &lt; 59，且节点59左孩子为空，故47为59节点的左孩子；<br>  （5）i = 4，A[4] = 35，35 &lt; 47，且节点47左孩子为空，故35为47节点的左孩子；<br>  （6）i = 5，A[5] = 73，73 &lt; 87，且节点87左孩子为空，故73为87节点的左孩子；<br>  （7）i = 6，A[6] = 51，47 &lt; 51，且节点47右孩子为空，故51为47节点的右孩子；<br>  （8）i = 7，A[7] = 98，98 &lt; 87，且节点87右孩子为空，故98为87节点的右孩子；<br>  （9）i = 8，A[8] = 93，93 &lt; 98，且节点98左孩子为空，故93为98节点的左孩子；创建完毕后如图2.4中的二叉搜索树：</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/345efd0ae02be18cbc25b92c518d156b.png" alt="图2.4"></p>
+<p>图2.4</p>
+<h2 id="2-5-查找"><a href="#2-5-查找" class="headerlink" title="2.5 查找"></a>2.5 查找</h2><p><strong>查找流程：</strong><br>  （1）如果树是空的，则查找结束，无匹配。<br>  （2）如果被查找的值和节点的值相等，查找成功。<br>  （3）如果被查找的值小于节点的值，递归查找左子树，<br>  （4）如果被查找的值大于节点的值，递归查找右子树，</p>
+<p><strong>查找代码：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 递归查找二叉排序树T中是否存在key, *&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;* 指针f指向T的双亲，其初始调用值为NULL *&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;* 若查找成功，则指针p指向该数据元素节点，并返回TRUE *&#x2F;</span><br><span class="line"></span><br><span class="line">&#x2F;* 否则指针p指向查找路径上访问的最后一个节点并返回FALSE *&#x2F;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bool searchBST(BSTNode* T, int key, BSTNode* f, BSTNode **p)</span><br><span class="line"></span><br><span class="line">&#123;  </span><br><span class="line"></span><br><span class="line">    if (!T) &#x2F;*  查找不成功 *&#x2F;</span><br><span class="line"></span><br><span class="line">    &#123; </span><br><span class="line"></span><br><span class="line">        *p &#x3D; f;  </span><br><span class="line"></span><br><span class="line">        return false; </span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else if (key &#x3D;&#x3D; T-&gt;key) &#x2F;*  查找成功 *&#x2F;</span><br><span class="line"></span><br><span class="line">    &#123; </span><br><span class="line"></span><br><span class="line">        *p &#x3D; T;  </span><br><span class="line"></span><br><span class="line">        return true; </span><br><span class="line"></span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    else if (key &lt; T-&gt;key) </span><br><span class="line"></span><br><span class="line">        return searchBST(T-&gt;lchild, key, T, p);  &#x2F;*  在左子树中继续查找 *&#x2F;</span><br><span class="line"></span><br><span class="line">    else  </span><br><span class="line"></span><br><span class="line">        return searchBST(T-&gt;rchild, key, T, p);  &#x2F;*  在右子树中继续查找 *&#x2F;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  使用二叉搜索树可以提高查找效率，其平均时间复杂度为O(log2n)。</p>
+<h2 id="2-6-插入"><a href="#2-6-插入" class="headerlink" title="2.6 插入"></a>2.6 插入</h2><p><strong>插入流程：</strong><br>  （1）先检测该元素是否在树中已经存在。如果已经存在，则不进行插入；<br>  （2）若元素不存在，则进行查找过程，并将元素插入在查找结束的位置。</p>
+<p><strong>图解过程：</strong></p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/3f7bd1b7062cbbffecc5bcf38ef020ab.png" alt="img"></p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/a83dc468dc9598784a68cbf33f4a9b20.png" alt="img"></p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/3717a705b9dfe0a39f7553937195e209.png" alt="img"></p>
+<p><strong>代码实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">void insertBST(BSTNode **T,int key) &#x2F;&#x2F;此处使用二重指针是因为要修改指针的指针</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    BSTNode *s;</span><br><span class="line"></span><br><span class="line">    if(*T&#x3D;&#x3D;NULL) &#x2F;&#x2F;到达查找结束位置，再次位置插入元素</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        s &#x3D; (BSTNode*)malloc(sizeof(BSTNode));</span><br><span class="line"></span><br><span class="line">        s-&gt;key &#x3D; key;</span><br><span class="line"></span><br><span class="line">        s-&gt;lchild &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">        s-&gt;rchild &#x3D; NULL;</span><br><span class="line"></span><br><span class="line">        *T&#x3D;s;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else if(key&lt;(*T)-&gt;key)&#x2F;&#x2F;要插入的值大于当前节点，往左子树搜</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        insertBST(&amp;((*T)-&gt;lchild),key);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else if(key&gt;(*T)-&gt;key)&#x2F;&#x2F;大于当前节点，往右子树搜</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        insertBST(&amp;((*T)-&gt;rchild),key);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-7-删除"><a href="#2-7-删除" class="headerlink" title="2.7 删除"></a>2.7 删除</h2><p><strong>（1）删除节点为叶子节点</strong><br>  删除叶子节点的方式最为简单，只需查找到该节点，直接删除即可。例如删除图2.4中的叶子节点37、节点51、节点60、节点73和节点93的方式是相同的。<br><img src="https://images.xiaozhuanlan.com/photo/2019/3e864bdb6f9b7049184cbe57407f16e2.png" alt="img"></p>
+<p><strong>（2） 删除的节点只有左子树</strong><br>  删除的节点若只有左子树，将节点的左子树替代该节点位置。例如：删除图2.4中的98节点：<br><img src="https://images.xiaozhuanlan.com/photo/2019/aeebafd749d590355f9f061a4c11dce3.png" alt="img"></p>
+<p><strong>（3）删除的节点只有右子树</strong><br>  删除的节点若只有右子树，将节点的右子树替代该节点位置。这种情况与删除左子树处理方式类似，不再赘述。</p>
+<p><strong>（4） 删除的节点既有左子树又有右子树。</strong><br>  若删除的节点既有左子树又有右子树，这种节点删除过程相对复杂。其流程如下：<br>  （1）遍历待删除节点的左子树，找到其左子树中的最大节点，即删除节点的前驱节点；<br>  （2）将最大节点代替被删除节点；<br>  （3）删除左子树中的最大节点；<br>  （4）左子树中待删除最大节点一定为叶子节点或者仅有左子树。按照之前情形删除即可。</p>
+<p>  注：同样可以使用删除节点的右子树中最小节点，即后继节点代替删除节点，此流程与使用前驱节点类似。</p>
+<p><strong>删除代码：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;若二叉排序树T中存在关键字等于key的数据元素时，则删除该数据元素节点</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;并返回TRUE；否则返回FALSE。</span><br><span class="line"></span><br><span class="line">bool deleteBST(BSTNode* T,int key)</span><br><span class="line"></span><br><span class="line">&#123; </span><br><span class="line"></span><br><span class="line">    if(!*T) &#x2F;* 不存在关键字等于key的数据元素 *&#x2F; </span><br><span class="line"></span><br><span class="line">        return false;</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        if (key &#x3D;&#x3D; (*T)-&gt;key) &#x2F;* 找到关键字等于key的数据元素 *&#x2F; </span><br><span class="line"></span><br><span class="line">            return deleteBSTNode(T);</span><br><span class="line"></span><br><span class="line">        else if (key&lt;(*T)-&gt;key)</span><br><span class="line"></span><br><span class="line">            return deleteBST(&amp;(*T)-&gt;lchild,key);</span><br><span class="line"></span><br><span class="line">        else</span><br><span class="line"></span><br><span class="line">            return deleteBST(&amp;(*T)-&gt;rchild,key);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;* 从二叉排序树中删除节点p，并重接它的左或右子树。 *&#x2F;</span><br><span class="line"></span><br><span class="line">bool deleteBSTNode(BSTNode* p)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    BSTNode* q,s;</span><br><span class="line"></span><br><span class="line">    if((*p)-&gt;rchild&#x3D;&#x3D;NULL) &#x2F;&#x2F;右子树空则只需重接它的左子树（待删节点是叶子也走此分支) </span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        q&#x3D;*p;</span><br><span class="line"></span><br><span class="line">        *p&#x3D;(*p)-&gt;lchild; </span><br><span class="line"></span><br><span class="line">        free(q);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else if((*p)-&gt;lchild&#x3D;&#x3D;NULL) &#x2F;&#x2F;左子树为空，只需重接它的右子树</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        q&#x3D;*p; </span><br><span class="line"></span><br><span class="line">        *p&#x3D;(*p)-&gt;rchild; </span><br><span class="line"></span><br><span class="line">        free(q);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else &#x2F;&#x2F;左右子树均不空</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        q&#x3D;*p; </span><br><span class="line"></span><br><span class="line">        s&#x3D;(*p)-&gt;lchild;</span><br><span class="line"></span><br><span class="line">        while(s-&gt;rchild) &#x2F;&#x2F; 转到左子树，然后向右到尽头（找待删节点的前驱） *&#x2F;</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            q&#x3D;s;</span><br><span class="line"></span><br><span class="line">            s&#x3D;s-&gt;rchild;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        (*p)-&gt;key&#x3D;s-&gt;key; &#x2F;&#x2F;s指向被删节点的直接前驱（将被删节点前驱的值取代被删节点的值）</span><br><span class="line"></span><br><span class="line">        if(q!&#x3D;*p)</span><br><span class="line"></span><br><span class="line">            q-&gt;rchild&#x3D;s-&gt;lchild; &#x2F;&#x2F;重接q的右子树</span><br><span class="line"></span><br><span class="line">        else</span><br><span class="line"></span><br><span class="line">            q-&gt;lchild&#x3D;s-&gt;lchild; &#x2F;&#x2F;重接q的左子树</span><br><span class="line"></span><br><span class="line">        free(s);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return TRUE;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3-平衡二叉树"><a href="#3-平衡二叉树" class="headerlink" title="3 平衡二叉树"></a>3 平衡二叉树</h1><h2 id="3-1-定义"><a href="#3-1-定义" class="headerlink" title="3.1 定义"></a>3.1 定义</h2><p>  二叉搜索树一定程度上可以提高搜索效率，但是当原序列有序，例如序列A = {1，2，3，4，5，6}，构造二叉搜索树如图3.1。依据此序列构造的二叉搜索树为右斜树，同时二叉树退化成单链表，搜索效率降低为O(n)。</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/c23f52a549d1bc70dc64e7a901ebdd24.png" alt="图3.1"></p>
+<p>图3.1</p>
+<p>  在此二叉搜索树中查找元素6需要查找6次。二叉搜索树的查找效率取决于树的高度，因此保持树的高度最小，即可保证树的查找效率。同样的序列A，改为图3.2方式存储，查找元素6时只需比较3次，查找效率提升一倍。</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/72686dbdfe520a06d5ff6fc133b76810.png" alt="img"></p>
+<p>  可以看出当节点数目一定，保持树的左右两端保持平衡，树的查找效率最高。这种左右子树的高度相差不超过1的树为平衡二叉树。</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/82f2367ec04e1ee753eeb5dece1edf1c.png" alt="非平衡二叉树"></p>
+<p>非平衡二叉树</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/f2d26b71e2ff26f79c4b7ccf0116a20c.png" alt="平衡二叉树"></p>
+<p>平衡二叉树</p>
+<h2 id="3-2-平衡因子"><a href="#3-2-平衡因子" class="headerlink" title="3.2 平衡因子"></a>3.2 平衡因子</h2><p>  <strong>定义：</strong>某节点的左子树与右子树的高度(深度)差即为该节点的平衡因子（BF,Balance Factor），平衡二叉树中不存在平衡因子大于1的节点。在一棵平衡二叉树中，节点的平衡因子只能取-1、1或者0。</p>
+<h2 id="3-3-节点结构"><a href="#3-3-节点结构" class="headerlink" title="3.3 节点结构"></a>3.3 节点结构</h2><p>  定义平衡二叉树的节点结构：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">typedef struct AVLNode *Tree;</span><br><span class="line"></span><br><span class="line">typedef int ElementType;</span><br><span class="line"></span><br><span class="line">struct AVLNode</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    int depth; &#x2F;&#x2F;深度，这里计算每个结点的深度，通过深度的比较可得出是否平衡</span><br><span class="line"></span><br><span class="line">    Tree parent; &#x2F;&#x2F;该结点的父节点，方便操作</span><br><span class="line"></span><br><span class="line">    ElementType val; &#x2F;&#x2F;结点值</span><br><span class="line"></span><br><span class="line">    Tree lchild;</span><br><span class="line"></span><br><span class="line">    Tree rchild;</span><br><span class="line"></span><br><span class="line">    AVLNode(int val&#x3D;0) &#x2F;&#x2F;默认构造函数</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        parent&#x3D;NULL;</span><br><span class="line"></span><br><span class="line">        depth&#x3D;0;</span><br><span class="line"></span><br><span class="line">        lchild&#x3D;rchild&#x3D;NULL;</span><br><span class="line"></span><br><span class="line">        this-&gt;val&#x3D;val;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>对于给定结点数为n的AVL树，最大高度为O(log2n).</p>
+<h2 id="3-4-左旋与右旋"><a href="#3-4-左旋与右旋" class="headerlink" title="3.4 左旋与右旋"></a>3.4 左旋与右旋</h2><p><strong>（1） 左旋</strong><br>  如图3.4.1所示的平衡二叉树</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/8e6ff094642e31da191436b6d3e2deec.png" alt="img"></p>
+<p>  如在此平衡二叉树插入节点62，树结构变为：</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/d46d86ed6a22896b82e5e5c2c0f7c9ff.png" alt="img"></p>
+<p>  可以得出40节点的左子树高度为1，右子树高度为3，此时平衡因子为-2，树失去平衡。为保证树的平衡，此时需要对节点40做出旋转，因为右子树高度高于左子树，对节点进行左旋操作，流程如下：<br>  （1）节点的右孩子替代此节点位置<br>  （2）右孩子的左子树变为该节点的右子树<br>  （3）节点本身变为右孩子的左子树</p>
+<p><strong>图解过程：</strong></p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/c620190798fdd2cad4761e9b4b3e0f79.png" alt="img"><br><img src="https://images.xiaozhuanlan.com/photo/2019/c068581a1ba17cf5a0c2982ed7cad89d.png" alt="img"></p>
+<p><strong>（2）右旋</strong><br>  右旋操作与左旋类似，操作流程为：<br>  （1）节点的左孩子代表此节点<br>  （2）节点的左孩子的右子树变为节点的左子树<br>  （3）将此节点作为左孩子节点的右子树。</p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/e67b88f8ee337bed83c6a1727dafd76a.png" alt="img"><br><img src="https://images.xiaozhuanlan.com/photo/2019/aa8e86fd58e6bf9bc944c604729fe6bb.png" alt="img"></p>
+<h2 id="3-5-插入"><a href="#3-5-插入" class="headerlink" title="3.5 插入"></a>3.5 插入</h2><p>  假设一颗 AVL 树的某个节点为A，有四种操作会使 A 的左右子树高度差大于 1，从而破坏了原有 AVL 树的平衡性。平衡二叉树插入节点的情况分为以下四种：</p>
+<p><strong>（1） A的左孩子的左子树插入节点(LL)</strong></p>
+<p>  例如：图3.5.1所示的平衡二叉树：<br><img src="https://images.xiaozhuanlan.com/photo/2019/b0f5bb03e5c371ffdc14dbc01baaa0e6.png" alt="图3.5.1"></p>
+<p>图3.5.1</p>
+<p>  节点A的左孩子为B，B的左子树为D，无论在节点D的左子树或者右子树中插入F均会导致节点A失衡。因此需要对节点A进行旋转操作。A的平衡因子为2，值为正，因此对A进行右旋操作。</p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/c59dff08018e5afb4d2a841b9de41c41.png" alt="img"><br><img src="https://images.xiaozhuanlan.com/photo/2019/51bef5f8b56b9be94f990ec67b85ba63.png" alt="img"></p>
+<p><strong>代码实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;LL型调整函数</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回:新父节点</span><br><span class="line"></span><br><span class="line">Tree LL_rotate(Tree node)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;node为离操作结点最近的失衡的结点</span><br><span class="line"></span><br><span class="line">    Tree parent&#x3D;NULL,son;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;获取失衡结点的父节点</span><br><span class="line"></span><br><span class="line">    parent&#x3D;node-&gt;parent;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;获取失衡结点的左孩子</span><br><span class="line"></span><br><span class="line">    son&#x3D;node-&gt;lchild;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;设置son结点右孩子的父指针</span><br><span class="line"></span><br><span class="line">    if (son-&gt;rchild!&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">        son-&gt;rchild-&gt;parent&#x3D;node;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;失衡结点的左孩子变更为son的右孩子</span><br><span class="line"></span><br><span class="line">    node-&gt;lchild&#x3D;son-&gt;rchild;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;更新失衡结点的高度信息</span><br><span class="line"></span><br><span class="line">    update_depth(node);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;失衡结点变成son的右孩子</span><br><span class="line"></span><br><span class="line">    son-&gt;rchild&#x3D;node;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;设置son的父结点为原失衡结点的父结点</span><br><span class="line"></span><br><span class="line">    son-&gt;parent&#x3D;parent;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;如果失衡结点不是根结点，则开始更新父节点</span><br><span class="line"></span><br><span class="line">    if (parent!&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;如果父节点的左孩子是失衡结点，指向现在更新后的新孩子son</span><br><span class="line"></span><br><span class="line">        if (parent-&gt;lchild&#x3D;&#x3D;node)</span><br><span class="line"></span><br><span class="line">            parent-&gt;lchild&#x3D;son;</span><br><span class="line"></span><br><span class="line">        else &#x2F;&#x2F;父节点的右孩子是失衡结点</span><br><span class="line"></span><br><span class="line">            parent-&gt;rchild&#x3D;son;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;设置失衡结点的父亲</span><br><span class="line"></span><br><span class="line">    node-&gt;parent&#x3D;son;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;更新son结点的高度信息</span><br><span class="line"></span><br><span class="line">    update_depth(son);</span><br><span class="line"></span><br><span class="line">    return son;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;更新当前深度</span><br><span class="line"></span><br><span class="line">void update_depth(Tree node)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    if (node&#x3D;&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">        return;</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        int depth_Lchild&#x3D;get_balance(node-&gt;lchild); &#x2F;&#x2F;左孩子深度</span><br><span class="line"></span><br><span class="line">        int depth_Rchild&#x3D;get_balance(node-&gt;rchild); &#x2F;&#x2F;右孩子深度</span><br><span class="line"></span><br><span class="line">        node-&gt;depth&#x3D;max(depth_Lchild,depth_Rchild)+1;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;获取当前结点的深度</span><br><span class="line"></span><br><span class="line">int get_balance(Tree node)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    if (node&#x3D;&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">        return 0;</span><br><span class="line"></span><br><span class="line">    return node-&gt;depth;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回当前平衡因子</span><br><span class="line"></span><br><span class="line">int is_balance(Tree node)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    if (node&#x3D;&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">        return 0;</span><br><span class="line"></span><br><span class="line">    else</span><br><span class="line"></span><br><span class="line">        return get_balance(node-&gt;lchild)-get_balance(node-&gt;rchild);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>（2） A的右孩子的右子树插入节点(RR)</strong></p>
+<p>  如图3.5.2所示：插入节点F后，节点A的平衡因子为-2，对节点A进行左旋操作。</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/5408f1dfe2eb60a1850dcc9d843fda87.png" alt="图3.5.2"></p>
+<p>图3.5.2</p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/33cc9eca713c95e4c0e3b13a321ad56c.png" alt="img"></p>
+<p><strong>代码实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;RR型调整函数</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回新父节点</span><br><span class="line"></span><br><span class="line">Tree RR_rotate(Tree node)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;node为离操作结点最近的失衡的结点</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    Tree parent&#x3D;NULL,son;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;获取失衡结点的父节点</span><br><span class="line"></span><br><span class="line">    parent&#x3D;node-&gt;parent;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;获取失衡结点的右孩子</span><br><span class="line"></span><br><span class="line">    son&#x3D;node-&gt;rchild;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;设置son结点左孩子的父指针</span><br><span class="line"></span><br><span class="line">    if (son-&gt;lchild!&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">        son-&gt;lchild-&gt;parent&#x3D;node;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;失衡结点的右孩子变更为son的左孩子</span><br><span class="line"></span><br><span class="line">    node-&gt;rchild&#x3D;son-&gt;lchild;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;更新失衡结点的高度信息</span><br><span class="line"></span><br><span class="line">    update_depth(node);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;失衡结点变成son的左孩子</span><br><span class="line"></span><br><span class="line">    son-&gt;lchild&#x3D;node;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;设置son的父结点为原失衡结点的父结点</span><br><span class="line"></span><br><span class="line">    son-&gt;parent&#x3D;parent;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;如果失衡结点不是根结点，则开始更新父节点</span><br><span class="line"></span><br><span class="line">    if (parent!&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;如果父节点的左孩子是失衡结点，指向现在更新后的新孩子son</span><br><span class="line"></span><br><span class="line">        if (parent-&gt;lchild&#x3D;&#x3D;node)</span><br><span class="line"></span><br><span class="line">            parent-&gt;lchild&#x3D;son;</span><br><span class="line"></span><br><span class="line">        else &#x2F;&#x2F;父节点的右孩子是失衡结点</span><br><span class="line"></span><br><span class="line">            parent-&gt;rchild&#x3D;son;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;设置失衡结点的父亲</span><br><span class="line"></span><br><span class="line">    node-&gt;parent&#x3D;son;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;更新son结点的高度信息</span><br><span class="line"></span><br><span class="line">    update_depth(son);</span><br><span class="line"></span><br><span class="line">    return son;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>（3） A的左孩子的右子树插入节点(LR)</strong><br>  若A的左孩子节点B的右子树E插入节点F，导致节点A失衡。<br><img src="https://images.xiaozhuanlan.com/photo/2019/e248da9174120d2d9395051adeec905e.png" alt="img"></p>
+<p>A的平衡因子为2，若仍按照右旋调整，调整过程如下：<br><img src="https://images.xiaozhuanlan.com/photo/2019/ea63ed172e870b3e3986f94643bda692.png" alt="img"><br><img src="https://images.xiaozhuanlan.com/photo/2019/5a57ef49f52993c14d2d1a57ba5a9fb4.png" alt="img"></p>
+<p>  经过右旋调整发现，调整后树仍然失衡，说明这种情况单纯的进行右旋操作不能使树重新平衡。那么这种插入方式需要执行两步操作：<br>  （1）对失衡节点A的左孩子B进行左旋操作，即RR情形操作。<br>  （2）对失衡节点A做右旋操作，即LL情形操作。</p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/4f06760bd599b1518b7debd38296fd9e.png" alt="img"><br><img src="https://images.xiaozhuanlan.com/photo/2019/a50f0100c7191342f6e7574cb50fa162.png" alt="img"></p>
+<p><strong>代码实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;LR型，先左旋转，再右旋转</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回：新父节点</span><br><span class="line"></span><br><span class="line">Tree LR_rotate(Tree node)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    RR_rotate(node-&gt;lchild);</span><br><span class="line"></span><br><span class="line">    return LL_rotate(node);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>（4） A的右孩子的左子树插入节点(RL)</strong><br>  右孩子插入左节点的过程与左孩子插入右节点过程类似，只需对右孩子进行LL操作，然后在对节点进行RR操作。</p>
+<p><strong>图解过程：</strong><br><img src="https://images.xiaozhuanlan.com/photo/2019/f5a5edd7506b6b3f7e80d74f1708098d.png" alt="img"><br><img src="https://images.xiaozhuanlan.com/photo/2019/a159987496c5732b363cb637b1ac4922.png" alt="img"><br><img src="https://images.xiaozhuanlan.com/photo/2019/2a03ff41e16a1d1321780732ad3af7d5.png" alt="img"></p>
+<p><strong>代码实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;RL型，先右旋转，再左旋转</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回:新父节点</span><br><span class="line"></span><br><span class="line">Tree RL_rotate(Tree node)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    LL_rotate(node-&gt;rchild);</span><br><span class="line"></span><br><span class="line">    return RR_rotate(node);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-6-删除"><a href="#3-6-删除" class="headerlink" title="3.6 删除"></a>3.6 删除</h2><p>  平衡二叉树的删除情况与二叉搜索树删除情况相同，同样分为以下四种情况：<br>  （1）删除叶子节点<br>  （2）删除节点只有左子树<br>  （3）删除节点只有右子树<br>  （4）删除节点既有左子树又有右子树<br>  平衡二叉树的节点删除与二叉搜索树删除方法一致，但是需要在节点删除后判断树是否仍然保持平衡，若出现失衡情况，需要进行调整。</p>
+<p><strong>代码实现：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;删除操作</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;参数：根，需要删除的结点</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回值: 返回删除结点的父节点</span><br><span class="line"></span><br><span class="line">Tree remove_val(Tree &amp;root,Tree &amp;node)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    Tree parent&#x3D;node-&gt;parent;</span><br><span class="line"></span><br><span class="line">    Tree temp&#x3D;NULL;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F;只有左孩子</span><br><span class="line"></span><br><span class="line">    if (node-&gt;rchild&#x3D;&#x3D;NULL &amp;&amp; node-&gt;lchild!&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        temp&#x3D;node;</span><br><span class="line"></span><br><span class="line">        node&#x3D;node-&gt;lchild; &#x2F;&#x2F;指向左孩子</span><br><span class="line"></span><br><span class="line">        node-&gt;parent&#x3D;temp-&gt;parent;</span><br><span class="line"></span><br><span class="line">        delete temp;       &#x2F;&#x2F;释放结点</span><br><span class="line"></span><br><span class="line">        update_depth(node); &#x2F;&#x2F;更新当前结点信息</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else if(node-&gt;lchild&#x3D;&#x3D;NULL &amp;&amp; node-&gt;rchild!&#x3D;NULL) &#x2F;&#x2F;只有右孩子</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        temp&#x3D;node;</span><br><span class="line"></span><br><span class="line">        node&#x3D;node-&gt;rchild; &#x2F;&#x2F;指向右结点</span><br><span class="line"></span><br><span class="line">        node-&gt;parent&#x3D;temp-&gt;parent;</span><br><span class="line"></span><br><span class="line">        delete temp;       &#x2F;&#x2F;释放结点</span><br><span class="line"></span><br><span class="line">        update_depth(node); &#x2F;&#x2F;更新当前结点信息</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else if(node-&gt;rchild&#x3D;&#x3D;NULL &amp;&amp; node-&gt;lchild&#x3D;&#x3D;NULL) &#x2F;&#x2F;叶子结点</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        parent&#x3D;node-&gt;parent; &#x2F;&#x2F;找到其父节点</span><br><span class="line"></span><br><span class="line">        if (parent) &#x2F;&#x2F;如果父节点存在</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            &#x2F;*</span><br><span class="line"></span><br><span class="line">            if (parent-&gt;lchild&#x3D;&#x3D;node)&#x2F;&#x2F;当前结点是父节点的左孩子</span><br><span class="line"></span><br><span class="line">            &#123;</span><br><span class="line"></span><br><span class="line">                parent-&gt;lchild&#x3D;0;    &#x2F;&#x2F;删掉左孩子</span><br><span class="line"></span><br><span class="line">                delete node;         &#x2F;&#x2F;释放空间</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            else    &#x2F;&#x2F;当前结点是父节点的右孩子</span><br><span class="line"></span><br><span class="line">            &#123;</span><br><span class="line"></span><br><span class="line">                parent-&gt;rchild&#x3D;0;</span><br><span class="line"></span><br><span class="line">                delete node;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">             *&#x2F;</span><br><span class="line"></span><br><span class="line">            delete node;</span><br><span class="line"></span><br><span class="line">            node&#x3D;NULL;</span><br><span class="line"></span><br><span class="line">            update_depth(parent); &#x2F;&#x2F;更新父节点高度信息</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        else &#x2F;&#x2F;删除的是根</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            delete root;</span><br><span class="line"></span><br><span class="line">            root&#x3D;NULL;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    else &#x2F;&#x2F;既有左孩子也有右孩子，化繁为简</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        Tree *tmp&#x3D;Find_Min(node-&gt;rchild); &#x2F;&#x2F;找到替代元素，temp为叶子结点</span><br><span class="line"></span><br><span class="line">        node-&gt;val&#x3D;(*tmp)-&gt;val;         &#x2F;&#x2F;更新值</span><br><span class="line"></span><br><span class="line">        &#x2F;&#x2F;判断当前叶子结点是左孩子还是右孩子。</span><br><span class="line"></span><br><span class="line">        parent&#x3D;(*tmp)-&gt;parent;</span><br><span class="line"></span><br><span class="line">        &#x2F;*</span><br><span class="line"></span><br><span class="line">        if (parent-&gt;lchild&#x3D;&#x3D;temp)</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            parent-&gt;lchild&#x3D;0;</span><br><span class="line"></span><br><span class="line">            delete temp;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        else</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            parent-&gt;rchild&#x3D;0;</span><br><span class="line"></span><br><span class="line">            delete temp;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">         *&#x2F;</span><br><span class="line"></span><br><span class="line">        delete *tmp;</span><br><span class="line"></span><br><span class="line">        *tmp&#x3D;NULL;</span><br><span class="line"></span><br><span class="line">        update_depth(parent);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return parent;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;AVL树调整函数</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;参数：根结点，插入结点</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;返回：调整后的根结点</span><br><span class="line"></span><br><span class="line">Tree AVLTree(Tree &amp;root,Tree node)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    int balance&#x3D;0; &#x2F;&#x2F;平衡因子</span><br><span class="line"></span><br><span class="line">    while (node!&#x3D;NULL) &#x2F;&#x2F;检查其祖先是否需要调整，更新</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">        update_depth(node); &#x2F;&#x2F;更新当前结点的高度信息</span><br><span class="line"></span><br><span class="line">        balance&#x3D;is_balance(node); &#x2F;&#x2F;获取当前结点的平衡因子情况</span><br><span class="line"></span><br><span class="line">        if (balance&gt;1 || balance&lt;-1) &#x2F;&#x2F;平衡因子超标</span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">            if (balance&gt;1) &#x2F;&#x2F;左子树高</span><br><span class="line"></span><br><span class="line">            &#123;</span><br><span class="line"></span><br><span class="line">                if (is_balance(node-&gt;lchild)&gt;0) &#x2F;&#x2F;LL型</span><br><span class="line"></span><br><span class="line">                    node&#x3D;LL_rotate(node);</span><br><span class="line"></span><br><span class="line">                else  &#x2F;&#x2F;LR型</span><br><span class="line"></span><br><span class="line">                    node&#x3D;LR_rotate(node);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            else &#x2F;&#x2F;右子树高</span><br><span class="line"></span><br><span class="line">            &#123;</span><br><span class="line"></span><br><span class="line">                if (is_balance(node-&gt;rchild)&lt;0) &#x2F;&#x2F;RR型</span><br><span class="line"></span><br><span class="line">                    node&#x3D;RR_rotate(node);</span><br><span class="line"></span><br><span class="line">                else &#x2F;&#x2F;RL型</span><br><span class="line"></span><br><span class="line">                    node&#x3D;RL_rotate(node);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (node-&gt;parent&#x3D;&#x3D;NULL) &#x2F;&#x2F;到达根结点</span><br><span class="line"></span><br><span class="line">            &#123;</span><br><span class="line"></span><br><span class="line">                root&#x3D;node; &#x2F;&#x2F;设置新的根结点</span><br><span class="line"></span><br><span class="line">                break; &#x2F;&#x2F;退出</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        node&#x3D;node-&gt;parent; &#x2F;&#x2F;依次找到其父节点</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return root; &#x2F;&#x2F;返回新根</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F;查找最小结点</span><br><span class="line"></span><br><span class="line">Tree *Find_Min(Tree &amp;root)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    if (root-&gt;lchild)</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line"></span><br><span class="line">       return Find_Min(root-&gt;lchild);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return &amp;root;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </div>
+  
+  <div class="article-tags">
+    
+      <a class="tag-none-link" href="/tags/%E6%95%B0%E8%AE%BA%E5%92%8C%E5%9B%BE%E8%AE%BA/" rel="tag">数论和图论</a>
+    
+  </div>
+
+  
+  <section id="comments" class="white-box">
+    
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    
+	</section>
+	
+
+</article>
+
+      <script>document.getElementById("loading-bar").style.width="60%";</script>
+    </main>
+    
+<footer id="footer" class="clearfix">
+	
+	<div class="search">
+	  <form name="searchform" id="searchform" class="u-search-form">
+	    <input type="text" id="searchinput" 
+				class="u-search-input st-default-search-input"
+				data-list-highlight="true" 
+				data-list-value-completion="true" 
+				placeholder="Looking for something?" />
+	    <button type="submit" id="u-search-btn-submit" class="u-search-btn-submit">
+	      <span class="icon icon-search"></span>
+	    </button>
+	  </form>
+	</div>
+	
+  <div>&copy; <a href="http://example.com">Molu</a> Theme by <a href="http://artifact.me/" target="_blank">Art Chen</a>.</div>
+  <div>Powered by <a target="_blank" href="https://hexo.io/" rel="external noopener">Hexo</a>.</div>
+</footer>
+
+
+    <script>document.getElementById("loading-bar").style.width="80%";</script>
+    <div class="overlay"></div>
+  </div>
+  <div class="site-sidebar">
+
+	
+	
+	<div class="sidebar-switch clearfix "
+		style="display: none">
+		<a class="dark-btn active" data-toggle="toc">
+	    <span class="icon icon-list"></span>
+	    <span class="text">Index</span>
+	  </a>
+	  <a class="dark-btn" data-toggle="bio">
+	    <span class="icon icon-person"></span>
+	    <span class="text">Bio</span>
+	  </a>
+	</div>
+
+	<div class="site-toc "
+		style="display: none">
+		
+	    <div class="no-index">No Index</div>
+	  
+  </div>
+  
+	<div class="site-bio show"
+		style="display: block">
+		
+	  <!-- About Me -->
+	  <div class="about-me clearfix">
+	    <div class="avatar">
+	      <img src="/img/avatar.png" />
+	    </div>
+	    <div class="info">
+	      <a class="name dark-btn" href="/about">
+	        Rick Smith
+	      </a>
+	    </div>
+	    <div class="info">
+	      <span class="item desc">
+	        
+	      </span>
+	    </div>
+	  </div>
+	
+	  <!-- Social Icons -->
+	  <div class="social clearfix">
+	    
+	      
+	        <a href="/atom.xml" class="feed"
+	          target="_blank" rel="external">
+	          <span class="icon icon-feed"></span>
+	        </a>
+	      
+	        <a href="https://github.com/artchen" class="github"
+	          target="_blank" rel="external">
+	          <span class="icon icon-github"></span>
+	        </a>
+	      
+	    
+	  </div>
+
+	</div>
+
+	<div class="shortcuts">
+		<a href="#header" class="top window-nav dark-btn" id="go-top">
+			<span class="icon icon-chevron-thin-up"></span>
+		</a>
+		<a class="close dark-btn" id="sidebar-close">
+			<span class="icon icon-close"></span>
+		</a>
+		<a href="#footer" class="top window-nav dark-btn" id="go-bottom">
+			<span class="icon icon-chevron-thin-down"></span>
+		</a>
+	</div>
+
+</div>
+
+  <!-- Universal Search -->
+
+<script type="text/javascript">
+  var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+  var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+  var ALGOLIA_API_KEY = "";
+  var ALGOLIA_APP_ID = "";
+  var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "google";
+  var universalSearchConfig = {};
+  if (SEARCH_SERVICE === 'google') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: GOOGLE_CUSTOM_SEARCH_API_KEY,
+      engineId: GOOGLE_CUSTOM_SEARCH_ENGINE_ID,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'algolia') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: ALGOLIA_API_KEY,
+      appId: ALGOLIA_APP_ID,
+      indexName: ALGOLIA_INDEX_NAME,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'azure') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      serviceName: AZURE_SERVICE_NAME,
+      indexName: AZURE_INDEX_NAME,
+      apiKey: AZURE_QUERY_KEY,
+      imagePath: "/img/"
+    };
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery.js"><\/script>')</script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/app.js"></script>
+
+
+<!-- Disqus -->
+
+
+<script type="text/javascript">
+  var disqus_shortname = 'molu';
+  
+  var disqus_url = 'http://example.com/2019/10/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<!-- Valine -->
+
+
+<!-- Swiftype -->
+<!-- Please replace with your own swiftype settings -->
+<!--
+<script type="text/javascript">
+  /* Swiftype */
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','FHMeAyBdVccJECstf-XJ','2.0.0');
+</script>
+-->
+
+  <script>document.getElementById("loading-bar").style.width="100%";</script>
+</body>
+</html>

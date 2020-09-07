@@ -1,0 +1,404 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>数据结构与算法--二叉树 | Molu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="二叉树1 前言  树是数据结构中的重中之重，尤其以各类二叉树为学习的难点。本文将详细讲述树的基本概念以及树构造和遍历，为后续深入学习做好基础。 2 概念2.1 节点  节点：是数据结构中的基础，是构成复杂数据结构的基本组成单位。 2.2 树节点  本系列文章中提及的节点专指树的节点。例如：节点A表示为： 树节点A 3 树3.1 定义  树（Tree）是n（n&gt;&#x3D;0)个节点的有限集。n&#x3D;0时称">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法--二叉树">
+<meta property="og:url" content="http://example.com/2019/10/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E4%BA%8C%E5%8F%89%E6%A0%91/index.html">
+<meta property="og:site_name" content="Molu">
+<meta property="og:description" content="二叉树1 前言  树是数据结构中的重中之重，尤其以各类二叉树为学习的难点。本文将详细讲述树的基本概念以及树构造和遍历，为后续深入学习做好基础。 2 概念2.1 节点  节点：是数据结构中的基础，是构成复杂数据结构的基本组成单位。 2.2 树节点  本系列文章中提及的节点专指树的节点。例如：节点A表示为： 树节点A 3 树3.1 定义  树（Tree）是n（n&gt;&#x3D;0)个节点的有限集。n&#x3D;0时称">
+<meta property="og:locale">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/1a74a03950f3cc44e04c71f3613f7ff4.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/581613b4bfafc7133283d12413aeb460.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/1bde1e8122201a60f718d4477d900083.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/9e29af97f8222291339d9fba19203beb.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/d058744643e16929f4c0a13112e4792b.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/58a5c9c2f42d471dc56f87862555eafe.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/887a6e1ca925b5c7f5efee3e65c7bb1a.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/8137c2e57ad6830c16e90e18d7b9cf8a.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/af84c9443d61b8e0dafc314b9a5f42bf.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/8b38bdf45ed8489d609fb728300f66d1.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/151e874fe831a37366797360b233dec3.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/5a74833c27012c97b6e36eaa5ebdff81.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/f24dafff5398fc7e609e1ead630204d1.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/26e46767f5931877752587cdb0fdb159.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/bb166099813d3cf7040675ae755ac863.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/b4a89c52aa1d446cca9ebd70b8a7d0e5.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/0e3ae6f6089e1c44628543bc4d8659ea.png">
+<meta property="article:published_time" content="2019-10-31T12:20:32.000Z">
+<meta property="article:modified_time" content="2019-10-31T12:25:32.000Z">
+<meta property="article:author" content="Rick Smith">
+<meta property="article:tag" content="数论和图论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.xiaozhuanlan.com/photo/2019/1a74a03950f3cc44e04c71f3613f7ff4.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+	<!-- If needed, replace your own web font service -->
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,700|Inconsolata|Oswald" rel="stylesheet" />
+
+  
+   
+  
+<link rel="stylesheet" href="/icomoon/style.css">
+
+  
+<link rel="stylesheet" href="/style.css">
+
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div class="site-wrapper is_post_page">
+    <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+<script>document.getElementById("loading-bar").style.width="20%";</script>
+
+
+<header id="header" class="site-header clearfix">
+
+  <a class="logo square clearfix" href="/">
+    <!-- 
+      Replace with your own size name, for example:
+      <span class="b">A</span>
+      <span class="w">B</span>
+      <span class="b">C</span>
+     -->
+     <span class="b">M</span>
+     <span class="b">O</span>
+     <span class="b">L</span>
+     <span class="w">U</span>
+     <span class="w">-</span>
+     <span class="b">Q</span>
+     <span class="b">w</span>
+     <span class="b">Q</span>
+  </a>
+  <a class="me square site-nav-switch clearfix">
+    <span class="b">
+    	<span class="icon icon-menu"></span>
+    </span>
+  </a>
+
+</header>
+
+    <script>document.getElementById("loading-bar").style.width="40%";</script>
+    <main id="main" class="clearfix">
+      <article id="post-数据结构与算法-二叉树"
+  class="article white-box article-type-post"
+  itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    <h1 class="article-title" itemprop="name">
+      数据结构与算法--二叉树
+    </h1>
+    <div class="article-meta">
+      Posted on 
+      <time class="article-time" datetime="2019-10-31T12:20:32.000Z" itemprop="datePublished">
+        Oct 31, 2019
+      </time>
+    </div>
+  </header>
+
+  <div class="article-entry" itemprop="articleBody">
+    <h1 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h1><h1 id="1-前言"><a href="#1-前言" class="headerlink" title="1 前言"></a>1 前言</h1><p>  <strong>树</strong>是数据结构中的重中之重，尤其以各类二叉树为学习的难点。本文将详细讲述树的基本概念以及树构造和遍历，为后续深入学习做好基础。</p>
+<h1 id="2-概念"><a href="#2-概念" class="headerlink" title="2 概念"></a>2 概念</h1><h2 id="2-1-节点"><a href="#2-1-节点" class="headerlink" title="2.1 节点"></a>2.1 节点</h2><p>  <strong>节点：</strong>是数据结构中的基础，是构成复杂数据结构的基本组成单位。</p>
+<h2 id="2-2-树节点"><a href="#2-2-树节点" class="headerlink" title="2.2 树节点"></a>2.2 树节点</h2><p>  本系列文章中提及的节点专指树的节点。例如：节点A表示为：<br><img src="https://images.xiaozhuanlan.com/photo/2019/1a74a03950f3cc44e04c71f3613f7ff4.png" alt="树节点A"></p>
+<p>树节点A</p>
+<h1 id="3-树"><a href="#3-树" class="headerlink" title="3 树"></a>3 树</h1><h2 id="3-1-定义"><a href="#3-1-定义" class="headerlink" title="3.1 定义"></a>3.1 定义</h2><p>  <strong>树（Tree）</strong>是n（n&gt;=0)个节点的有限集。n=0时称为空树。在任意一颗非空树中：<br>  （1）有且仅有一个特定的称为根（Root）的节点；<br>  （2）当n&gt;1时，其余节点可分为m(m&gt;0)个互不相交的有限集T1、T2、……、Tn，其中每一个集合本身又是一棵树，并且称为根的子树。<br>此外，树的定义还需要强调以下两点：<br>  （3）n&gt;0时根节点是唯一的，不可能存在多个根节点，数据结构中的树只能有一个根节点。<br>  （4）m&gt;0时，子树的个数没有限制，但它们一定是互不相交的。</p>
+<p>  例如：图3.1中所示的树为一棵有10个节点的一般树。<br><img src="https://images.xiaozhuanlan.com/photo/2019/581613b4bfafc7133283d12413aeb460.png" alt="图3.1 一般树"></p>
+<p>图3.1 一般树</p>
+<p>  由树的定义可以看出，树的定义使用了递归的方式。递归在树的学习过程中起着重要作用。</p>
+<h2 id="3-2-节点的度"><a href="#3-2-节点的度" class="headerlink" title="3.2 节点的度"></a>3.2 节点的度</h2><p>  <strong>定义：</strong>节点拥有的子树数目称为节点的<strong>度</strong>。例如：图3.2中标注了图3.1所示树的各个节点的度。<br><img src="https://images.xiaozhuanlan.com/photo/2019/1bde1e8122201a60f718d4477d900083.png" alt="图3.2 节点的度"></p>
+<p>图3.2 节点的度</p>
+<h2 id="3-3-节点关系"><a href="#3-3-节点关系" class="headerlink" title="3.3 节点关系"></a>3.3 节点关系</h2><p>  节点子树的根节点为该节点的<strong>孩子节点</strong>。相应该节点称为孩子节点的<strong>双亲节点</strong>。图3.2中，A为B的双亲节点，B为A的孩子节点。<br>  同一个双亲节点的孩子节点之间互称<strong>兄弟节点</strong>。图3.2中，B与C互为兄弟节点，GHI互为兄弟节点，EF互为兄弟节点。</p>
+<h2 id="3-4-节点层次"><a href="#3-4-节点层次" class="headerlink" title="3.4 节点层次"></a>3.4 节点层次</h2><p>  从根节点开始，根节点为第一层，根的孩子为第二层，以此类推。例如：图3.4表示了图3.1所示树的层次关系<br><img src="https://images.xiaozhuanlan.com/photo/2019/9e29af97f8222291339d9fba19203beb.png" alt="图3.4 节点层次"></p>
+<p>图3.4 节点层次</p>
+<h2 id="3-5-树的深度"><a href="#3-5-树的深度" class="headerlink" title="3.5 树的深度"></a>3.5 树的深度</h2><p>  树中节点的最大层次数称为树的深度或高度。例如：图3.1所示树的深度为4。</p>
+<h1 id="4-二叉树"><a href="#4-二叉树" class="headerlink" title="4 二叉树"></a>4 二叉树</h1><h2 id="4-1-定义"><a href="#4-1-定义" class="headerlink" title="4.1 定义"></a>4.1 定义</h2><p>  <strong>二叉树</strong>是n(n&gt;=0)个节点的有限集合，该集合或者为空集（称为空二叉树），或者由一个根节点和两棵互不相交的、分别称为根节点的左子树和右子树组成。<br>图4.1展示了一棵一般二叉树：<br><img src="https://images.xiaozhuanlan.com/photo/2019/d058744643e16929f4c0a13112e4792b.png" alt="图4.1 一般二叉树"></p>
+<p>图4.1 一般二叉树</p>
+<h2 id="4-2-二叉树特点"><a href="#4-2-二叉树特点" class="headerlink" title="4.2 二叉树特点"></a>4.2 二叉树特点</h2><p>  由二叉树的定义，以及图中所示的二叉树的分析可以得出二叉树具有以下几个特点：<br>  （1）每个节点最多有两颗子树，所以二叉树中不存在度大于2的节点。<br>  （2）左子树和右子树是有顺序的，次序不能任意颠倒。<br>  （3）即使树中某节点只有一棵子树，也要区分它是左子树还是右子树。</p>
+<h2 id="4-3-二叉树性质"><a href="#4-3-二叉树性质" class="headerlink" title="4.3 二叉树性质"></a>4.3 二叉树性质</h2><p>  （1）在二叉树的第i层上最多有2i-1 个节点 。（i&gt;=1）<br>  （2）二叉树中如果深度为k,那么最多有2k-1个节点。(k&gt;=1）<br>  （3）n0=n2+1 n0表示度数为0的节点数，n2表示度数为2的节点数。<br>  （4）在完全二叉树中，具有n个节点的完全二叉树的深度为[log2n]+1，其中[log2n]是向下取整。<br>  （5）若对含 n 个节点的完全二叉树从上到下且从左至右进行 1 至 n 的编号，则对完全二叉树中任意一个编号为 i 的节点有如下特性：<br>    （5）- 1，若 i=1，则该节点是二叉树的根，无双亲, 否则，编号为 [i/2] 的节点为其双亲节点;<br>    （5）- 2，若 2i&gt;n，则该节点无左孩子， 否则，编号为 2i 的节点为其左孩子节点；<br>    （5）- 3，若 2i+1&gt;n，则该节点无右孩子节点， 否则，编号为2i+1 的节点为其右孩子节点。</p>
+<h2 id="4-4-斜树"><a href="#4-4-斜树" class="headerlink" title="4.4 斜树"></a>4.4 斜树</h2><p>  <strong>斜树</strong>：所有的节点都只有左子树的二叉树叫左斜树。所有节点都是只有右子树的二叉树叫右斜树，这两者统称为斜树。<br><img src="https://images.xiaozhuanlan.com/photo/2019/58a5c9c2f42d471dc56f87862555eafe.png" alt="图4.4.1 左斜树"></p>
+<p>图4.4.1 左斜树</p>
+<p>图4.4.2 右斜树</p>
+<h2 id="4-5-满二叉树"><a href="#4-5-满二叉树" class="headerlink" title="4.5 满二叉树"></a>4.5 满二叉树</h2><p>   <strong>满二叉树</strong>：在一棵二叉树中。如果所有分支节点都存在左子树和右子树，并且所有叶子都在同一层上，这样的二叉树称为满二叉树。<br>满二叉树的特点有：<br>  （1）叶子只能出现在最下一层。出现在其它层就不可能达成平衡。<br>  （2）非叶子节点的度一定是2。<br>  （3）在同样深度的二叉树中，满二叉树的节点个数最多，叶子节点数最多。</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/887a6e1ca925b5c7f5efee3e65c7bb1a.png" alt="图4.5 满二叉树"></p>
+<p>图4.5 满二叉树</p>
+<h2 id="4-6-完全二叉树"><a href="#4-6-完全二叉树" class="headerlink" title="4.6 完全二叉树"></a>4.6 完全二叉树</h2><p>  <strong>完全二叉树</strong>：对一颗具有n个节点的二叉树按层编号，如果编号为i(1&lt;=i&lt;=n)的节点与同样深度的满二叉树中编号为i的节点在二叉树中位置完全相同，则这棵二叉树称为完全二叉树。 图4.6为一棵完全二叉树<img src="https://images.xiaozhuanlan.com/photo/2019/8137c2e57ad6830c16e90e18d7b9cf8a.png" alt="图4.6 完全二叉树"></p>
+<p>图4.6 完全二叉树</p>
+<p><strong>完全二叉树特点</strong>：<br>  （1）叶子节点只能出现在最下层和次下层。<br>  （2）最下层的叶子节点集中在树的左部。<br>  （3）倒数第二层若存在叶子节点，一定在右部连续位置。<br>  （4）如果节点度为1，则该节点只有左孩子，即没有右子树。<br>  （5）同样节点数目的二叉树，完全二叉树深度最小。</p>
+<p>  <strong>注</strong>：满二叉树一定是完全二叉树，但反过来不一定成立。</p>
+<h2 id="4-7-二叉树的存储结构"><a href="#4-7-二叉树的存储结构" class="headerlink" title="4.7 二叉树的存储结构"></a>4.7 二叉树的存储结构</h2><p><strong>（1）顺序存储</strong><br>  二叉树的顺序存储结构就是使用一维数组存储二叉树中的节点，并且节点的存储位置，就是数组的下标索引。<br><img src="https://images.xiaozhuanlan.com/photo/2019/af84c9443d61b8e0dafc314b9a5f42bf.png" alt="图4.6 完全二叉树"></p>
+<p>图4.6 完全二叉树</p>
+<p>  例如：图4.6所示的一棵完全二叉树采用顺序存储方式，如图4.7.1表示：<br><img src="https://images.xiaozhuanlan.com/photo/2019/8b38bdf45ed8489d609fb728300f66d1.png" alt="图4.7.1 顺序存储"></p>
+<p>图4.7.1 顺序存储</p>
+<p>  由图4.7.1可以看出，当二叉树为完全二叉树时，节点数刚好填满数组。那么当二叉树不为完全二叉树时，采用顺序存储形式如何呢？例如：对于图4.7.2描述的二叉树：<br><img src="https://images.xiaozhuanlan.com/photo/2019/151e874fe831a37366797360b233dec3.png" alt="图4.7.2"></p>
+<p>图4.7.2</p>
+<p>  其中，未填充节点表示节点不存在。那么图4.7.2所示的二叉树的顺序存储结构如图4.7.3所示：<br><img src="https://images.xiaozhuanlan.com/photo/2019/5a74833c27012c97b6e36eaa5ebdff81.png" alt="图4.7.3"></p>
+<p>图4.7.3</p>
+<p>  其中，∧表示数组中此位置没有存储节点。此时可以发现，顺序存储结构中已经出现了空间浪费的情况。<br>  那么对于图4.4.2所示的右斜树极端情况对应的顺序存储结构如图4.7.4所示：<br><img src="https://images.xiaozhuanlan.com/photo/2019/f24dafff5398fc7e609e1ead630204d1.png" alt="图4.7.4"></p>
+<p>图4.7.4</p>
+<p>  由图4.7.4可以看出，对于这种右斜树极端情况，采用顺序存储的方式是十分浪费空间的。因此，顺序存储一般适用于完全二叉树。</p>
+<p><strong>（2）二叉链表</strong><br>  既然顺序存储不能满足二叉树的存储需求，那么考虑采用链式存储。由二叉树定义可知，二叉树的每个节点最多有两个孩子。因此，可以将节点数据结构定义为一个数据和两个指针域。表示方式如图4.7.5所示：<br><img src="https://images.xiaozhuanlan.com/photo/2019/26e46767f5931877752587cdb0fdb159.png" alt="图4.7.5"></p>
+<p>图4.7.5</p>
+<p>定义节点代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct BiTNode&#123;</span><br><span class="line"></span><br><span class="line">    TElemType data;&#x2F;&#x2F;数据</span><br><span class="line"></span><br><span class="line">    struct BiTNode *lchild, *rchild;&#x2F;&#x2F;左右孩子指针</span><br><span class="line"></span><br><span class="line">&#125; BiTNode, *BiTree;</span><br></pre></td></tr></table></figure>
+
+<p>  则图4.6所示的完全二叉树可以采用图4.7.6表示。<br><img src="https://images.xiaozhuanlan.com/photo/2019/bb166099813d3cf7040675ae755ac863.png" alt="图4.7.6"></p>
+<p>图4.7.6</p>
+<p>  图4.7.6中采用链表结构存储二叉树，这种链表称为二叉链表。</p>
+<h1 id="5-二叉树遍历"><a href="#5-二叉树遍历" class="headerlink" title="5 二叉树遍历"></a>5 二叉树遍历</h1><h2 id="5-1-定义"><a href="#5-1-定义" class="headerlink" title="5.1 定义"></a>5.1 定义</h2><p>  <strong>二叉树的遍历</strong>是指从二叉树的根节点出发，按照某种次序依次访问二叉树中的所有节点，使得每个节点被访问一次，且仅被访问一次。按照二叉树的访问次序，可以将二叉树遍历分为四种：<br>  （1）前序遍历<br>  （2）中序遍历<br>  （3）后序遍历<br>  （4）层序遍历</p>
+<h2 id="5-2-前序遍历"><a href="#5-2-前序遍历" class="headerlink" title="5.2 前序遍历"></a>5.2 前序遍历</h2><p>  <strong>前序遍历</strong>，通俗的说就是从二叉树的根节点出发，当第一次到达节点时就输出节点数据，按照先向左在向右的方向访问。<br><img src="https://images.xiaozhuanlan.com/photo/2019/b4a89c52aa1d446cca9ebd70b8a7d0e5.png" alt="图5.2"></p>
+<p>图5.2</p>
+<p>例如：图5.2所示二叉树采用前序遍历方式访问如下：</p>
+<blockquote>
+<p>（1）从根节点出发，则第一次到达节点A，故输出A;<br>（2）继续向左访问，第一次访问节点B，故输出B；<br>（3）按照同样规则，输出D，输出H；<br>（4）当到达叶子节点H，返回到D，此时已经是第二次到达D，故不在输出D<br>（5）向D右子树访问，D右子树不为空，则访问至I，第一次到达I，则输出I；<br>（6）I为叶子节点，则返回到D，D左右子树已经访问完毕，则返回到B，<br>（7）访问B右子树，第一次到达E，故输出E；<br>（8）访问E左子树，故输出J；<br>（9）按照同样的访问规则，继续输出C、F、G；</p>
+</blockquote>
+<p>  则图5.2所示二叉树的前序遍历输出为：<br>  <strong>A-B-D-H-I-E-J-C-F-G</strong></p>
+<h2 id="5-3-中序遍历"><a href="#5-3-中序遍历" class="headerlink" title="5.3 中序遍历"></a>5.3 中序遍历</h2><p>  <strong>中序遍历</strong>就是从二叉树的根节点出发，当第二次到达节点时就输出节点数据，按照先向左在向右的方向访问。</p>
+<p>  例如：图5.2所示二叉树中序访问如下：</p>
+<blockquote>
+<p>（1）从根节点出发，则第一次到达节点A，不输出A；<br>（2）继续向左访问，第一次访问节点B，不输出B；<br>（3）继续到达D，H，到达H，H左子树为空，则返回到H，此时第二次访问H，故输出H；<br>（4）H右子树为空，则返回至D，此时第二次到达D，故输出D；<br>（5）由D返回至B，第二次到达B，故输出B；<br>（6）按照同样规则继续访问，输出J、E、A、F、C、G；</p>
+</blockquote>
+<p>  则5.2所示二叉树的中序遍历输出为：<br>  <strong>H-D-I-B-J-E-A-F-C-G</strong></p>
+<h2 id="5-4-后序遍历"><a href="#5-4-后序遍历" class="headerlink" title="5.4 后序遍历"></a>5.4 后序遍历</h2><p>  <strong>后序遍历</strong>就是从二叉树的根节点出发，当第三次到达节点时就输出节点数据，按照先向左在向右的方向访问。</p>
+<p>  例如：图5.2所示二叉树后序访问如下：</p>
+<blockquote>
+<p>（1）从根节点出发，则第一次到达节点A，不输出A；<br>（2）继续向左访问，第一次访问节点B，不输出B；<br>（3）继续到达D，H，到达H，H左子树为空，则返回到H，此时第二次访问H，不输出H；<br>（4）H右子树为空，则返回至H，此时第三次到达H，故输出H；<br>（5）由H返回至D，第二次到达D，不输出D；<br>（6）继续访问至I，I左右子树均为空，故第三次访问I时，输出I；<br>（7）返回至D，此时第三次到达D，故输出D；<br>（8）按照同样规则继续访问，输出J、E、B、F、G、C，A；</p>
+</blockquote>
+<p>  则图5.2所示二叉树的后序遍历输出为：<br><strong>H-I-D-J-E-B-F-G-C-A</strong><br>  虽然二叉树的遍历过程看似繁琐，但是由于二叉树是一种递归定义的结构，故采用递归方式遍历二叉树的代码十分简单。</p>
+<h2 id="5-5-遍历程序"><a href="#5-5-遍历程序" class="headerlink" title="5.5 遍历程序"></a>5.5 遍历程序</h2><p>  递归实现代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*二叉树的前序遍历递归算法*&#x2F;</span><br><span class="line"></span><br><span class="line">void PreOrderTraverse(BiTree T)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    if(T&#x3D;&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">    return;</span><br><span class="line"></span><br><span class="line">    printf(&quot;%c&quot;, T-&gt;data);  &#x2F;*显示节点数据，可以更改为其他对节点操作*&#x2F;</span><br><span class="line"></span><br><span class="line">    PreOrderTraverse(T-&gt;lchild);    &#x2F;*再先序遍历左子树*&#x2F;</span><br><span class="line"></span><br><span class="line">    PreOrderTraverse(T-&gt;rchild);    &#x2F;*最后先序遍历右子树*&#x2F;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;*二叉树的中序遍历递归算法*&#x2F;</span><br><span class="line"></span><br><span class="line">void InOrderTraverse(BiTree T)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    if(T&#x3D;&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">    return;</span><br><span class="line"></span><br><span class="line">    InOrderTraverse(T-&gt;lchild); &#x2F;*中序遍历左子树*&#x2F;</span><br><span class="line"></span><br><span class="line">    printf(&quot;%c&quot;, T-&gt;data);  &#x2F;*显示节点数据，可以更改为其他对节点操作*&#x2F;</span><br><span class="line"></span><br><span class="line">    InOrderTraverse(T-&gt;rchild); &#x2F;*最后中序遍历右子树*&#x2F;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#x2F;*二叉树的后序遍历递归算法*&#x2F;</span><br><span class="line"></span><br><span class="line">void PostOrderTraverse(BiTree T)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">    if(T&#x3D;&#x3D;NULL)</span><br><span class="line"></span><br><span class="line">    return;</span><br><span class="line"></span><br><span class="line">    PostOrderTraverse(T-&gt;lchild);   &#x2F;*先后序遍历左子树*&#x2F;</span><br><span class="line"></span><br><span class="line">    PostOrderTraverse(T-&gt;rchild);   &#x2F;*再后续遍历右子树*&#x2F;</span><br><span class="line"></span><br><span class="line">    printf(&quot;%c&quot;, T-&gt;data);  &#x2F;*显示节点数据，可以更改为其他对节点操作*&#x2F;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-6-层次遍历"><a href="#5-6-层次遍历" class="headerlink" title="5.6 层次遍历"></a>5.6 层次遍历</h2><p>  <strong>层次遍历</strong>就是按照树的层次自上而下的遍历二叉树。针对图5.2所示二叉树的层次遍历结果为：<br>  <strong>A-B-C-D-E-F-G-H-I-J</strong></p>
+<h2 id="5-7-考点"><a href="#5-7-考点" class="headerlink" title="5.7 考点"></a>5.7 考点</h2><p>（1）已知前序遍历序列和中序遍历序列，确定一棵二叉树。<br>  例题：若一棵二叉树的前序遍历为ABCDEF，中序遍历为CBAEDF，请画出这棵二叉树。<br>  分析：前序遍历第一个输出节点为根节点，故A为根节点。早中序遍历中根节点处于左右子树节点中间，故节点A的左子树中节点有CB，右子树中节点有EDF。<br>如图5.7.1所示：<br><img src="https://images.xiaozhuanlan.com/photo/2019/0e3ae6f6089e1c44628543bc4d8659ea.png" alt="图5.7.1"></p>
+<p>图5.7.1</p>
+<p>  按照同样的分析方法，对A的左右子树进行划分，最后得出二叉树的形态如图5.7.2所示：</p>
+<p>图5.7.2</p>
+<p>（2）已知后序遍历序列和中序遍历序列，确定一棵二叉树。</p>
+<p>  后序遍历中最后访问的为根节点，因此可以按照上述同样的方法，找到根节点后分成两棵子树，进而继续找到子树的根节点，一步步确定二叉树的形态。</p>
+<p>  </p>
+<p>注</p>
+<p>：已知前序遍历序列和后序遍历序列，不可以唯一确定一棵二叉树。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*二叉树的前序遍历递归算法*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PreOrderTraverse</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T==<span class="literal">NULL</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>, T-&gt;data);  <span class="comment">/*显示结点数据，可以更改为其他对结点操作*/</span></span><br><span class="line">    PreOrderTraverse(T-&gt;lchild);    <span class="comment">/*再先序遍历左子树*/</span></span><br><span class="line">    PreOrderTraverse(T-&gt;rchild);    <span class="comment">/*最后先序遍历右子树*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*二叉树的中序遍历递归算法*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InOrderTraverse</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T==<span class="literal">NULL</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">    InOrderTraverse(T-&gt;lchild); <span class="comment">/*中序遍历左子树*/</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>, T-&gt;data);  <span class="comment">/*显示结点数据，可以更改为其他对结点操作*/</span></span><br><span class="line">    InOrderTraverse(T-&gt;rchild); <span class="comment">/*最后中序遍历右子树*/</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/*二叉树的后序遍历递归算法*/</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PostOrderTraverse</span><span class="params">(BiTree T)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(T==<span class="literal">NULL</span>)</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">    PostOrderTraverse(T-&gt;lchild);   <span class="comment">/*先后序遍历左子树*/</span></span><br><span class="line">    PostOrderTraverse(T-&gt;rchild);   <span class="comment">/*再后续遍历右子树*/</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>, T-&gt;data);  <span class="comment">/*显示结点数据，可以更改为其他对结点操作*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+  </div>
+  
+  <div class="article-tags">
+    
+      <a class="tag-none-link" href="/tags/%E6%95%B0%E8%AE%BA%E5%92%8C%E5%9B%BE%E8%AE%BA/" rel="tag">数论和图论</a>
+    
+  </div>
+
+  
+  <section id="comments" class="white-box">
+    
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    
+	</section>
+	
+
+</article>
+
+      <script>document.getElementById("loading-bar").style.width="60%";</script>
+    </main>
+    
+<footer id="footer" class="clearfix">
+	
+	<div class="search">
+	  <form name="searchform" id="searchform" class="u-search-form">
+	    <input type="text" id="searchinput" 
+				class="u-search-input st-default-search-input"
+				data-list-highlight="true" 
+				data-list-value-completion="true" 
+				placeholder="Looking for something?" />
+	    <button type="submit" id="u-search-btn-submit" class="u-search-btn-submit">
+	      <span class="icon icon-search"></span>
+	    </button>
+	  </form>
+	</div>
+	
+  <div>&copy; <a href="http://example.com">Molu</a> Theme by <a href="http://artifact.me/" target="_blank">Art Chen</a>.</div>
+  <div>Powered by <a target="_blank" href="https://hexo.io/" rel="external noopener">Hexo</a>.</div>
+</footer>
+
+
+    <script>document.getElementById("loading-bar").style.width="80%";</script>
+    <div class="overlay"></div>
+  </div>
+  <div class="site-sidebar">
+
+	
+	
+	<div class="sidebar-switch clearfix "
+		style="display: none">
+		<a class="dark-btn active" data-toggle="toc">
+	    <span class="icon icon-list"></span>
+	    <span class="text">Index</span>
+	  </a>
+	  <a class="dark-btn" data-toggle="bio">
+	    <span class="icon icon-person"></span>
+	    <span class="text">Bio</span>
+	  </a>
+	</div>
+
+	<div class="site-toc "
+		style="display: none">
+		
+	    <div class="no-index">No Index</div>
+	  
+  </div>
+  
+	<div class="site-bio show"
+		style="display: block">
+		
+	  <!-- About Me -->
+	  <div class="about-me clearfix">
+	    <div class="avatar">
+	      <img src="/img/avatar.png" />
+	    </div>
+	    <div class="info">
+	      <a class="name dark-btn" href="/about">
+	        Rick Smith
+	      </a>
+	    </div>
+	    <div class="info">
+	      <span class="item desc">
+	        
+	      </span>
+	    </div>
+	  </div>
+	
+	  <!-- Social Icons -->
+	  <div class="social clearfix">
+	    
+	      
+	        <a href="/atom.xml" class="feed"
+	          target="_blank" rel="external">
+	          <span class="icon icon-feed"></span>
+	        </a>
+	      
+	        <a href="https://github.com/artchen" class="github"
+	          target="_blank" rel="external">
+	          <span class="icon icon-github"></span>
+	        </a>
+	      
+	    
+	  </div>
+
+	</div>
+
+	<div class="shortcuts">
+		<a href="#header" class="top window-nav dark-btn" id="go-top">
+			<span class="icon icon-chevron-thin-up"></span>
+		</a>
+		<a class="close dark-btn" id="sidebar-close">
+			<span class="icon icon-close"></span>
+		</a>
+		<a href="#footer" class="top window-nav dark-btn" id="go-bottom">
+			<span class="icon icon-chevron-thin-down"></span>
+		</a>
+	</div>
+
+</div>
+
+  <!-- Universal Search -->
+
+<script type="text/javascript">
+  var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+  var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+  var ALGOLIA_API_KEY = "";
+  var ALGOLIA_APP_ID = "";
+  var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "google";
+  var universalSearchConfig = {};
+  if (SEARCH_SERVICE === 'google') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: GOOGLE_CUSTOM_SEARCH_API_KEY,
+      engineId: GOOGLE_CUSTOM_SEARCH_ENGINE_ID,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'algolia') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: ALGOLIA_API_KEY,
+      appId: ALGOLIA_APP_ID,
+      indexName: ALGOLIA_INDEX_NAME,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'azure') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      serviceName: AZURE_SERVICE_NAME,
+      indexName: AZURE_INDEX_NAME,
+      apiKey: AZURE_QUERY_KEY,
+      imagePath: "/img/"
+    };
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery.js"><\/script>')</script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/app.js"></script>
+
+
+<!-- Disqus -->
+
+
+<script type="text/javascript">
+  var disqus_shortname = 'molu';
+  
+  var disqus_url = 'http://example.com/2019/10/31/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E4%BA%8C%E5%8F%89%E6%A0%91/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<!-- Valine -->
+
+
+<!-- Swiftype -->
+<!-- Please replace with your own swiftype settings -->
+<!--
+<script type="text/javascript">
+  /* Swiftype */
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','FHMeAyBdVccJECstf-XJ','2.0.0');
+</script>
+-->
+
+  <script>document.getElementById("loading-bar").style.width="100%";</script>
+</body>
+</html>

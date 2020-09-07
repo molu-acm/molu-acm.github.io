@@ -1,0 +1,396 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>数据结构与算法--霍夫曼树 | Molu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1 概述  霍夫曼编码是一种基于最小冗余编码的压缩算法。最小冗余编码是指，如果知道一组数据中符号出现的频率，就可以用一种特殊的方式来表示符号从而减少数据需要的存储空间。霍夫曼编码过程如下： 2 统计字符频率  例如：有如下字符串：  A A C B C A A D D B B A D D A A B B 得到各个字符频率如下表：    字符 频率    A 7   B 5   C 2   D 4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构与算法--霍夫曼树">
+<meta property="og:url" content="http://example.com/2019/11/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E9%9C%8D%E5%A4%AB%E6%9B%BC%E6%A0%91/index.html">
+<meta property="og:site_name" content="Molu">
+<meta property="og:description" content="1 概述  霍夫曼编码是一种基于最小冗余编码的压缩算法。最小冗余编码是指，如果知道一组数据中符号出现的频率，就可以用一种特殊的方式来表示符号从而减少数据需要的存储空间。霍夫曼编码过程如下： 2 统计字符频率  例如：有如下字符串：  A A C B C A A D D B B A D D A A B B 得到各个字符频率如下表：    字符 频率    A 7   B 5   C 2   D 4">
+<meta property="og:locale">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/0984734e8a967409842936106165630f.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/269fd327cc2ad4535b8c1f697dc86d89.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/31e863099cdaa847aa7939be74d0a896.png">
+<meta property="og:image" content="https://images.xiaozhuanlan.com/photo/2019/ac8d652b3ed305e344a4a2edcdda4745.png">
+<meta property="article:published_time" content="2019-11-04T10:25:59.000Z">
+<meta property="article:modified_time" content="2019-11-04T10:28:02.000Z">
+<meta property="article:author" content="Rick Smith">
+<meta property="article:tag" content="树论和图论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.xiaozhuanlan.com/photo/2019/0984734e8a967409842936106165630f.png">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+	<!-- If needed, replace your own web font service -->
+  <link href="https://fonts.googleapis.com/css?family=Crimson+Text:400,700|Inconsolata|Oswald" rel="stylesheet" />
+
+  
+   
+  
+<link rel="stylesheet" href="/icomoon/style.css">
+
+  
+<link rel="stylesheet" href="/style.css">
+
+
+<meta name="generator" content="Hexo 5.1.1"></head>
+
+<body>
+  <div class="site-wrapper is_post_page">
+    <div id="loading-bar-wrapper">
+  <div id="loading-bar"></div>
+</div>
+<script>document.getElementById("loading-bar").style.width="20%";</script>
+
+
+<header id="header" class="site-header clearfix">
+
+  <a class="logo square clearfix" href="/">
+    <!-- 
+      Replace with your own size name, for example:
+      <span class="b">A</span>
+      <span class="w">B</span>
+      <span class="b">C</span>
+     -->
+     <span class="b">M</span>
+     <span class="b">O</span>
+     <span class="b">L</span>
+     <span class="w">U</span>
+     <span class="w">-</span>
+     <span class="b">Q</span>
+     <span class="b">w</span>
+     <span class="b">Q</span>
+  </a>
+  <a class="me square site-nav-switch clearfix">
+    <span class="b">
+    	<span class="icon icon-menu"></span>
+    </span>
+  </a>
+
+</header>
+
+    <script>document.getElementById("loading-bar").style.width="40%";</script>
+    <main id="main" class="clearfix">
+      <article id="post-数据结构与算法-霍夫曼树"
+  class="article white-box article-type-post"
+  itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    <h1 class="article-title" itemprop="name">
+      数据结构与算法--霍夫曼树
+    </h1>
+    <div class="article-meta">
+      Posted on 
+      <time class="article-time" datetime="2019-11-04T10:25:59.000Z" itemprop="datePublished">
+        Nov 4, 2019
+      </time>
+    </div>
+  </header>
+
+  <div class="article-entry" itemprop="articleBody">
+    <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1 概述"></a>1 概述</h1><p>  霍夫曼编码是一种基于最小冗余编码的压缩算法。最小冗余编码是指，如果知道一组数据中符号出现的频率，就可以用一种特殊的方式来表示符号从而减少数据需要的存储空间。霍夫曼编码过程如下：</p>
+<h1 id="2-统计字符频率"><a href="#2-统计字符频率" class="headerlink" title="2 统计字符频率"></a>2 统计字符频率</h1><p>  例如：有如下字符串：<br>  A A C B C A A D D B B A D D A A B B</p>
+<p>得到各个字符频率如下表：</p>
+<table>
+<thead>
+<tr>
+<th align="left">字符</th>
+<th align="left">频率</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">A</td>
+<td align="left">7</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">5</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">2</td>
+</tr>
+<tr>
+<td align="left">D</td>
+<td align="left">4</td>
+</tr>
+</tbody></table>
+<h1 id="3-构造霍夫曼树"><a href="#3-构造霍夫曼树" class="headerlink" title="3 构造霍夫曼树"></a>3 构造霍夫曼树</h1><h2 id="3-1-霍夫曼树定义"><a href="#3-1-霍夫曼树定义" class="headerlink" title="3.1 霍夫曼树定义"></a>3.1 霍夫曼树定义</h2><p>  霍夫曼树：给定n个权值作为n个叶子结点，构造一棵二叉树，若带权路径长度达到最小，称这样的二叉树为最优二叉树，也称为哈夫曼树(Huffman Tree)。哈夫曼树是带权路径长度最短的树，权值较大的结点离根较近。结合第2节中的字符串，将字符串出现频率作为权值。</p>
+<h2 id="3-2-构造流程"><a href="#3-2-构造流程" class="headerlink" title="3.2 构造流程"></a>3.2 构造流程</h2><p>（1）选取权值最小和次小的节点作为左右子树，构造一棵二叉树。<br>（2）将步骤1构造的二叉树的根节点的权值设置为，左右子树之和。<br>（3）去除步骤1中已经选过的节点，将新的二叉树的根节点加入至待选集合<br>（4）继续重复步骤1，直至仅剩一个元素未选中。</p>
+<h2 id="3-3-图解过程"><a href="#3-3-图解过程" class="headerlink" title="3.3 图解过程"></a>3.3 图解过程</h2><p><img src="https://images.xiaozhuanlan.com/photo/2019/0984734e8a967409842936106165630f.png" alt="img"></p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/269fd327cc2ad4535b8c1f697dc86d89.png" alt="img"></p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/31e863099cdaa847aa7939be74d0a896.png" alt="img"></p>
+<p>  通过构造的霍夫曼树可以看出，权值越大的节点距离根节点越近，其深度越小，权值越小的节点，距离根节点越远，其深度越大。</p>
+<h1 id="4-霍夫曼编码"><a href="#4-霍夫曼编码" class="headerlink" title="4 霍夫曼编码"></a>4 霍夫曼编码</h1><p>  在经过步骤3，构造出霍夫曼树后，对霍夫曼树执行遍历。将向左子树路径标记为0，向右子树的路径标记为1。则标记后的霍夫曼树为：</p>
+<p><img src="https://images.xiaozhuanlan.com/photo/2019/ac8d652b3ed305e344a4a2edcdda4745.png" alt="图4.1"></p>
+<p>图4.1</p>
+<p>  按照图4.1进行霍夫曼编码为：</p>
+<table>
+<thead>
+<tr>
+<th align="left">数据</th>
+<th align="left">编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">A</td>
+<td align="left">0</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">10</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">111</td>
+</tr>
+<tr>
+<td align="left">D</td>
+<td align="left">110</td>
+</tr>
+</tbody></table>
+<p>  A A C B C A A D D B B A D D A A B B 编码后的数据长度为：<br>  0 0 111 10 111 0 0 110 110 10 10 0 110 110 0 0 10 10 编码长度为35。</p>
+<p>  若采用等长编码为：</p>
+<table>
+<thead>
+<tr>
+<th align="left">数据</th>
+<th align="left">编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">A</td>
+<td align="left">00</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">01</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">10</td>
+</tr>
+<tr>
+<td align="left">D</td>
+<td align="left">11</td>
+</tr>
+</tbody></table>
+<p>  则A A C B C A A D D B B A D D A A B B对应编码为：<br>  00 00 10 01 10 00 00 11 11 01 01 00 11 11 00 00 01 01<br>  编码长度为36。可以看出使用霍夫曼编码可以缩短数据编码长度，达到数据压缩的效果。当字符数目较少时不能体现霍夫曼编码带来的压缩效果，但是当字符数目较多时，霍夫曼编码的压缩效率将显著提高。</p>
+<h1 id="5-代码实现"><a href="#5-代码实现" class="headerlink" title="5 代码实现"></a>5 代码实现</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;  </span><br><span class="line">#include&lt;string&gt;  </span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">struct Node</span><br><span class="line">&#123;</span><br><span class="line">    double weight;  &#x2F;&#x2F;存储权值</span><br><span class="line">    string ch;  &#x2F;&#x2F;存储字符</span><br><span class="line">    string code; &#x2F;&#x2F;编码</span><br><span class="line">    int lchild, rchild, parent;&#x2F;&#x2F;分别存储左孩子、右孩子、父节点位置</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">void Select(Node huffTree[], int *a, int *b, int n)&#x2F;&#x2F;找权值最小的两个a和b  </span><br><span class="line">&#123;</span><br><span class="line">    int i;</span><br><span class="line">    double weight &#x3D; 0; &#x2F;&#x2F;找最小的数</span><br><span class="line">    for (i &#x3D; 0; i &lt;n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        if (huffTree[i].parent !&#x3D; -1)     &#x2F;&#x2F;判断节点是否已经选过</span><br><span class="line">            continue;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            if (weight &#x3D;&#x3D; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                weight &#x3D; huffTree[i].weight;</span><br><span class="line">                *a &#x3D; i;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                if (huffTree[i].weight &lt; weight)</span><br><span class="line">                &#123;</span><br><span class="line">                    weight &#x3D; huffTree[i].weight;</span><br><span class="line">                    *a &#x3D; i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    weight &#x3D; 0; &#x2F;&#x2F;找第二小的数</span><br><span class="line">    for (i &#x3D; 0; i &lt; n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        if (huffTree[i].parent !&#x3D; -1 || (i &#x3D;&#x3D; *a))&#x2F;&#x2F;排除已选过的数</span><br><span class="line">            continue;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            if (weight &#x3D;&#x3D; 0)</span><br><span class="line">            &#123;</span><br><span class="line">                weight &#x3D; huffTree[i].weight;</span><br><span class="line">                *b &#x3D; i;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                if (huffTree[i].weight  &lt; weight)</span><br><span class="line">                &#123;</span><br><span class="line">                    weight &#x3D; huffTree[i].weight;</span><br><span class="line">                    *b &#x3D; i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    int temp;</span><br><span class="line">    if (huffTree[*a].lchild &lt; huffTree[*b].lchild)  &#x2F;&#x2F;小的数放左边</span><br><span class="line">    &#123;</span><br><span class="line">        temp &#x3D; *a;</span><br><span class="line">        *a &#x3D; *b;</span><br><span class="line">        *b &#x3D; temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Huff_Tree(Node huffTree[], int w[], string ch[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; 2 * n - 1; i++) &#x2F;&#x2F;初始过程</span><br><span class="line">    &#123;</span><br><span class="line">        huffTree[i].parent &#x3D; -1;    </span><br><span class="line">        huffTree[i].lchild &#x3D; -1;    </span><br><span class="line">        huffTree[i].rchild &#x3D; -1;  </span><br><span class="line">        huffTree[i].code &#x3D; &quot;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    for (int i &#x3D; 0; i &lt; n; i++)       </span><br><span class="line">    &#123;</span><br><span class="line">        huffTree[i].weight &#x3D; w[i];  </span><br><span class="line">        huffTree[i].ch &#x3D; ch[i];     </span><br><span class="line">    &#125;</span><br><span class="line">    for (int k &#x3D; n; k &lt; 2 * n - 1; k++)</span><br><span class="line">    &#123;</span><br><span class="line">        int i1 &#x3D; 0;</span><br><span class="line">        int i2 &#x3D; 0;</span><br><span class="line">        Select(huffTree, &amp;i1, &amp;i2, k); &#x2F;&#x2F;将i1，i2节点合成节点k</span><br><span class="line">        huffTree[i1].parent &#x3D; k;   </span><br><span class="line">        huffTree[i2].parent &#x3D; k;</span><br><span class="line">        huffTree[k].weight &#x3D; huffTree[i1].weight + huffTree[i2].weight;</span><br><span class="line">        huffTree[k].lchild &#x3D; i1;</span><br><span class="line">        huffTree[k].rchild &#x3D; i2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Huff_Code(Node huffTree[], int n)</span><br><span class="line">&#123;</span><br><span class="line">    int i, j, k;</span><br><span class="line">    string s &#x3D; &quot;&quot;;</span><br><span class="line">    for (i &#x3D; 0; i &lt; n; i++)  </span><br><span class="line">    &#123;</span><br><span class="line">        s &#x3D; &quot;&quot;;         </span><br><span class="line">        j &#x3D; i;                </span><br><span class="line">        while (huffTree[j].parent !&#x3D; -1) &#x2F;&#x2F;从叶子往上找到根节点</span><br><span class="line">        &#123;</span><br><span class="line">            k &#x3D; huffTree[j].parent;</span><br><span class="line">            if (j &#x3D;&#x3D; huffTree[k].lchild) &#x2F;&#x2F;如果是根的左孩子，则记为0</span><br><span class="line">            &#123;</span><br><span class="line">                s &#x3D; s + &quot;0&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">            else               </span><br><span class="line">            &#123;</span><br><span class="line">                s &#x3D; s + &quot;1&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">            j &#x3D; huffTree[j].parent; </span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; &quot;字符 &quot; &lt;&lt; huffTree[i].ch &lt;&lt; &quot; 的编码：&quot;;</span><br><span class="line">        for (int l &#x3D; s.size() - 1; l &gt;&#x3D; 0; l--)    </span><br><span class="line">        &#123;</span><br><span class="line">            cout &lt;&lt; s[l];</span><br><span class="line">            huffTree[i].code +&#x3D; s[l]; &#x2F;&#x2F;保存编码</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">string Huff_Decode(Node huffTree[], int n,string s)</span><br><span class="line">&#123;</span><br><span class="line">    cout &lt;&lt; &quot;解码后为：&quot;;</span><br><span class="line">    string temp &#x3D; &quot;&quot;,str&#x3D;&quot;&quot;;&#x2F;&#x2F;保存解码后的字符串</span><br><span class="line">    for (int i &#x3D; 0; i &lt; s.size(); i++)</span><br><span class="line">    &#123;</span><br><span class="line">        temp &#x3D; temp + s[i];</span><br><span class="line">        for (int j &#x3D; 0; j &lt; n; j++)</span><br><span class="line">        &#123;    </span><br><span class="line">            if (temp &#x3D;&#x3D; huffTree[j].code)</span><br><span class="line">            &#123;</span><br><span class="line">                str&#x3D;str+ huffTree[j].ch;</span><br><span class="line">                temp &#x3D; &quot;&quot;;</span><br><span class="line">                break;</span><br><span class="line">            &#125;    </span><br><span class="line">            else if (i &#x3D;&#x3D; s.size()-1&amp;&amp;j&#x3D;&#x3D;n-1&amp;&amp;temp!&#x3D;&quot;&quot;)&#x2F;&#x2F;全部遍历后没有</span><br><span class="line">            &#123;</span><br><span class="line">                str&#x3D; &quot;解码错误！&quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </div>
+  
+  <div class="article-tags">
+    
+      <a class="tag-none-link" href="/tags/%E6%A0%91%E8%AE%BA%E5%92%8C%E5%9B%BE%E8%AE%BA/" rel="tag">树论和图论</a>
+    
+  </div>
+
+  
+  <section id="comments" class="white-box">
+    
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+      </div>
+    
+	</section>
+	
+
+</article>
+
+      <script>document.getElementById("loading-bar").style.width="60%";</script>
+    </main>
+    
+<footer id="footer" class="clearfix">
+	
+	<div class="search">
+	  <form name="searchform" id="searchform" class="u-search-form">
+	    <input type="text" id="searchinput" 
+				class="u-search-input st-default-search-input"
+				data-list-highlight="true" 
+				data-list-value-completion="true" 
+				placeholder="Looking for something?" />
+	    <button type="submit" id="u-search-btn-submit" class="u-search-btn-submit">
+	      <span class="icon icon-search"></span>
+	    </button>
+	  </form>
+	</div>
+	
+  <div>&copy; <a href="http://example.com">Molu</a> Theme by <a href="http://artifact.me/" target="_blank">Art Chen</a>.</div>
+  <div>Powered by <a target="_blank" href="https://hexo.io/" rel="external noopener">Hexo</a>.</div>
+</footer>
+
+
+    <script>document.getElementById("loading-bar").style.width="80%";</script>
+    <div class="overlay"></div>
+  </div>
+  <div class="site-sidebar">
+
+	
+	
+	<div class="sidebar-switch clearfix "
+		style="display: none">
+		<a class="dark-btn active" data-toggle="toc">
+	    <span class="icon icon-list"></span>
+	    <span class="text">Index</span>
+	  </a>
+	  <a class="dark-btn" data-toggle="bio">
+	    <span class="icon icon-person"></span>
+	    <span class="text">Bio</span>
+	  </a>
+	</div>
+
+	<div class="site-toc "
+		style="display: none">
+		
+	    <div class="no-index">No Index</div>
+	  
+  </div>
+  
+	<div class="site-bio show"
+		style="display: block">
+		
+	  <!-- About Me -->
+	  <div class="about-me clearfix">
+	    <div class="avatar">
+	      <img src="/img/avatar.png" />
+	    </div>
+	    <div class="info">
+	      <a class="name dark-btn" href="/about">
+	        Rick Smith
+	      </a>
+	    </div>
+	    <div class="info">
+	      <span class="item desc">
+	        
+	      </span>
+	    </div>
+	  </div>
+	
+	  <!-- Social Icons -->
+	  <div class="social clearfix">
+	    
+	      
+	        <a href="/atom.xml" class="feed"
+	          target="_blank" rel="external">
+	          <span class="icon icon-feed"></span>
+	        </a>
+	      
+	        <a href="https://github.com/artchen" class="github"
+	          target="_blank" rel="external">
+	          <span class="icon icon-github"></span>
+	        </a>
+	      
+	    
+	  </div>
+
+	</div>
+
+	<div class="shortcuts">
+		<a href="#header" class="top window-nav dark-btn" id="go-top">
+			<span class="icon icon-chevron-thin-up"></span>
+		</a>
+		<a class="close dark-btn" id="sidebar-close">
+			<span class="icon icon-close"></span>
+		</a>
+		<a href="#footer" class="top window-nav dark-btn" id="go-bottom">
+			<span class="icon icon-chevron-thin-down"></span>
+		</a>
+	</div>
+
+</div>
+
+  <!-- Universal Search -->
+
+<script type="text/javascript">
+  var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+  var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+  var ALGOLIA_API_KEY = "";
+  var ALGOLIA_APP_ID = "";
+  var ALGOLIA_INDEX_NAME = "";
+  var AZURE_SERVICE_NAME = "";
+  var AZURE_INDEX_NAME = "";
+  var AZURE_QUERY_KEY = "";
+  var BAIDU_API_ID = "";
+  var SEARCH_SERVICE = "google";
+  var universalSearchConfig = {};
+  if (SEARCH_SERVICE === 'google') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: GOOGLE_CUSTOM_SEARCH_API_KEY,
+      engineId: GOOGLE_CUSTOM_SEARCH_ENGINE_ID,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'algolia') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      apiKey: ALGOLIA_API_KEY,
+      appId: ALGOLIA_APP_ID,
+      indexName: ALGOLIA_INDEX_NAME,
+      imagePath: "/img/"
+    };
+  } else if (SEARCH_SERVICE === 'azure') {
+    universalSearchConfig = {
+      searchService: SEARCH_SERVICE,
+      serviceName: AZURE_SERVICE_NAME,
+      indexName: AZURE_INDEX_NAME,
+      apiKey: AZURE_QUERY_KEY,
+      imagePath: "/img/"
+    };
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script>window.jQuery || document.write('<script src="/js/jquery.js"><\/script>')</script>
+
+
+<script src="/js/search.js"></script>
+
+
+<script src="/js/app.js"></script>
+
+
+<!-- Disqus -->
+
+
+<script type="text/javascript">
+  var disqus_shortname = 'molu';
+  
+  var disqus_url = 'http://example.com/2019/11/04/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E9%9C%8D%E5%A4%AB%E6%9B%BC%E6%A0%91/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<!-- Valine -->
+
+
+<!-- Swiftype -->
+<!-- Please replace with your own swiftype settings -->
+<!--
+<script type="text/javascript">
+  /* Swiftype */
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','FHMeAyBdVccJECstf-XJ','2.0.0');
+</script>
+-->
+
+  <script>document.getElementById("loading-bar").style.width="100%";</script>
+</body>
+</html>
